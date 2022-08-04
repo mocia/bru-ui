@@ -1,0 +1,110 @@
+<template>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="data.storage" 
+            error.bind="error.storage"
+            label="Sumber Penyimpanan" 
+            change.delegate="sourceChange($event)" 
+            loader.bind="sourceLoader"
+            placeholder="Cari Sumber Penyimpanan" 
+            key="code"
+            text="name"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+        <au-textbox
+            value.bind="barcode"
+            if.bind="hasSource"
+            label="Barcode"
+            focus.bind="hasFocus"
+            input.delegate="barcodeChoose($event)"
+            options.bind="auInputOptions">
+        </au-textbox>
+        <!-- <div class="form-group">
+            <finishedgoods-auto-suggest if.bind="hasSource" label="Nama Barang" class="col-md-9" value.bind="item" read-only.bind="readOnly" change.delegate="nameChoose($event)"></finishedgoods-auto-suggest>
+        </div> -->
+    </form>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th width="5%">No.</th>
+                <th width="10%">Barcode</th>
+                <th width="15%">Nama Barang</th>
+                <th width="5%">Kuantitas Stok Akhir</th>
+                <th width="5%">Tipe</th>
+                <th width="5%">Jumlah</th>
+                <th width="5%">Perkiraan Setelah Disesuaikan</th>
+                <th width="10%">Catatan</th>
+                <th width="10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data.items">
+                <td>${$index+1}</td>
+                <td>
+                    <au-textbox
+                        value.bind="item.item.code"
+                        error.bind="error.items[$index].code"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </td>
+                <td> 
+                    <au-textbox
+                        value.bind="item.item.name"
+                        error.bind="error.items[$index].name"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </td>
+                <td>
+                    <au-numeric 
+                        value.bind="item.qtyBeforeAdjustment" 
+                        format="0" 
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-numeric>
+                </td>
+                <td>
+                    <au-dropdown 
+                        value.bind="item.type" 
+                        error.bind="error.items[$index].type"
+                        read-only.bind="readOnly" 
+                        items.bind="Type"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+                </td>
+                <td> 
+                    <au-numeric 
+                        value.bind="item.qtyAdjustment" 
+                        format="0" 
+                        error.bind="error.items[$index].qtyAdjustment"
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                    </au-numeric>
+                </td>
+                <td>
+                    <au-numeric 
+                        value.bind="item.type == 'IN' ? (item.qtyBeforeAdjustment + item.qtyAdjustment) : (item.qtyBeforeAdjustment - item.qtyAdjustment)"
+                        read-only="true" 
+                        error.bind="error.items[$index].quantity"
+                        options.bind="controlOptions">
+                    </au-numeric>
+                </td>
+                <td>
+                    <au-textbox
+                        value.bind="item.remark"
+                        error.bind="error.items[$index].remark"
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </td>
+                <td>
+                    <button href="#" class="btn btn-danger btn-sm pull-right" click.delegate="removeItem(item)">Hapus</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.items.length == 0">
+        Tidak ada data.
+    </div>
+</template>
