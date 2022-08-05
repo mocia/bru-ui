@@ -43,16 +43,16 @@ export class Service extends RestService{
     return super.getXls(endpoint);
   }
 
-  getAllMovementByDate(storageId, itemCode, month, year) {
-    var config = Container.instance.get(Config);
-    var endpoint = config.getEndpoint("inventory").client.baseUrl + `${serviceUriStorages}/get-movements-by-date?storageId=${storageId}&itemCode=${itemCode}&month=${month}&year=${year}`;  
-    return super.get(endpoint);
-  }
+  // getAllMovementByDate(storageId, itemCode, month, year) {
+  //   var config = Container.instance.get(Config);
+  //   var endpoint = config.getEndpoint("inventory").client.baseUrl + `${serviceUriStorages}/get-movements-by-date?storageId=${storageId}&itemCode=${itemCode}&month=${month}&year=${year}`;  
+  //   return super.get(endpoint);
+  // }
 
-  movementExcelByDate(storageId, itemCode, month, year) {
-    var config = Container.instance.get(Config);
-    var endpoint = config.getEndpoint("inventory").client.baseUrl + `${serviceUriStorages}/get-movements-by-date/download?storageId=${storageId}&itemCode=${itemCode}&month=${month}&year=${year}`; 
-    return super.getXls(endpoint);
-  }
+  // movementExcelByDate(storageId, itemCode, month, year) {
+  //   var config = Container.instance.get(Config);
+  //   var endpoint = config.getEndpoint("inventory").client.baseUrl + `${serviceUriStorages}/get-movements-by-date/download?storageId=${storageId}&itemCode=${itemCode}&month=${month}&year=${year}`; 
+  //   return super.getXls(endpoint);
+  // }
    
 }

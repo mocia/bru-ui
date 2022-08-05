@@ -4,18 +4,18 @@
         <div class="form-group">
             <label for="code" class="col-sm-2 control-label">Gudang</label>
             <div class="col-sm-10">
-                <!-- <p class="form-control-static">${data[0].StorageName}</p> -->
-                <p class="form-control-static">${storageName}</p>
+                <p class="form-control-static">${data[0].StorageName}</p>
+                <!-- <p class="form-control-static">${storageName}</p> -->
             </div>
         </div>
         <div class="form-group">
             <label for="code" class="col-sm-2 control-label">Item</label>
             <div class="col-sm-10">
-                <!-- <p class="form-control-static">${data[0].ItemName}</p> -->
-                <p class="form-control-static">${itemName}</p>
+                <p class="form-control-static">${data[0].ItemName}</p>
+                <!-- <p class="form-control-static">${itemName}</p> -->
             </div>
         </div> 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="code" class="col-sm-2 control-label">Bulan</label>
             <au-dropdown value.bind="month" options.bind="controlOptions" items.bind="itemMonths" key="value" text="text"></au-dropdown>        
         </div>
@@ -23,13 +23,13 @@
         <div class="form-group">
             <label for="code" class="col-sm-2 control-label">Tahun</label>
             <au-dropdown value.bind="year" options.bind="controlOptions" items.bind="itemYears" key="value" text="text"></au-dropdown>
-        </div>
+        </div> -->
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="col-sm-12">
                 <button class="btn btn-success pull-right" click.delegate="loadPage()">Tampilkan</button>
             </div>
-        </div>
+        </div> -->
         
     </form> 
     <!-- <au-table 
@@ -73,5 +73,5 @@
         &nbsp;
         <button style="margin-right:10px; "click.delegate="moveexcel()" class="btn btn-success btn-sm pull-right">Cetak Excel</button>
     </div>
-    <pagination if.bind="info.page" info.bind="info" change.delegate="changePage($event)"></pagination>
+    <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
 </template>
