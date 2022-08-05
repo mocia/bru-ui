@@ -1,0 +1,64 @@
+<template>
+    <div class="row">
+        <div class="col-md-8">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox label="Kode Storage" value.bind="data.code" error.bind="error.code" read-only.bind="readOnly || data._id" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox label="Nama Storage" value.bind="data.name" error.bind="error.name" read-only.bind="(readOnly)|| data._id" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox label="Alamat" value.bind="data.address" error.bind="error.address" read-only.bind="(readOnly)" options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-textbox label="Phone" value.bind="data.phone" error.bind="error.phone" read-only.bind="(readOnly)" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete 
+                    value.bind="selectedUnit"
+                    label="Unit" 
+                    loader.one-time="unitLoader" 
+                    text.bind="unitView"
+                    read-only.bind="readOnly"
+                    error.bind="error.unit"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-multiline label="Keterangan" value.bind="data.description" error.bind="error.description" read-only.bind="(readOnly)" options.bind="controlOptions">
+                </au-multiline>
+
+                <div class="form-group has-error">
+                    <p if.bind="error.modules" class="help-block text-center">${error.modules}</p>
+                </div>
+
+                <au-collection
+                    items.bind="data.moduleSources" 
+                    errors.bind="error.ModuleSources" 
+                    columns.bind="modulesColumns"
+                    read-only.bind="readOnly" 
+                    add.bind="addModuleSources" 
+                    remove.bind="removeModuleSources"
+                    options.bind="Options"
+                    item-template="modules/master/storage/template/module-source"
+                    title="Module Source">
+                </au-collection>
+
+                <au-collection
+                    items.bind="data.moduleDestinations" 
+                    errors.bind="error.ModuleDestinations" 
+                    columns.bind="modulesColumnsD"
+                    read-only.bind="readOnly" 
+                    add.bind="addModuleDestinations" 
+                    remove.bind="removeModuleDestinations"
+                    options.bind="Options"
+                    item-template="modules/master/storage/template/module-destination"
+                    title="Module Destination">
+                </au-collection>
+
+                <template replaceable part="actions"></template>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>
