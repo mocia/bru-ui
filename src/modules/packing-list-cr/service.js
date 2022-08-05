@@ -7,7 +7,7 @@ import { Config } from "aurelia-api";
 //const serviceUri = 'docs/efr-pk-pbj';
 const serviceUri = 'pkpbj/by-user'
 const serviceInven = 'inventory';
-const servicePrintUri = 'docs/print/efr-pk-pbj';
+const servicePrintUri = 'docs/print/btq-pk-pbj';
 
 export class Service extends RestService {
 

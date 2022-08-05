@@ -3,7 +3,7 @@ import { HttpClient } from 'aurelia-fetch-client';
 import { RestService } from '../../utils/rest-service';
 
 //const serviceUri = '/docs/efr-tb-bbt';
-const serviceUri = 'stores/efr-tb-bbt';
+const serviceUri = 'stores/btq-tb-bbt';
 const serviceSpkUri = 'pkpbj/by-user';
 const serviceUriStorages = '/storages';
 

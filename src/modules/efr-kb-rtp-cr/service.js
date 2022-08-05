@@ -6,7 +6,7 @@ import { Config } from "aurelia-api"
 
 //const serviceUri = 'docs/efr-kb-rtp';
 const serviceUri = 'stores/btq-kb-rtp';
-const serviceSearch = 'docs/efr-pk-pbj/submitted';
+const serviceSearch = 'docs/btq-pk-pbj/submitted';
 
 export class Service extends RestService {
 

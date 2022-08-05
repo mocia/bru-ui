@@ -5,7 +5,7 @@ import { Container } from 'aurelia-dependency-injection';
 import { Config } from "aurelia-api";
 
 const serviceUri = 'pkpbj/by-user';
-const servicePrintUri = 'docs/print/efr-pk-pbj';
+const servicePrintUri = 'docs/print/btq-pk-pbj';
 
 export class Service extends RestService {
 

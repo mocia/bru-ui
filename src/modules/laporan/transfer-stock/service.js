@@ -39,7 +39,7 @@ export class Service extends RestService {
 
   getSPKByReference(codeRTT) {
     var config = Container.instance.get(Config);
-    var endpoint = config.getEndpoint("merchandiser").client.baseUrl + 'docs/efr-pk/rtt?reference=' + codeRTT;
+    var endpoint = config.getEndpoint("merchandiser").client.baseUrl + 'docs/btq-pk/rtt?reference=' + codeRTT;
     return super.get(endpoint);
   }
 

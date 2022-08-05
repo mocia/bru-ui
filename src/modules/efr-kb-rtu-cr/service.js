@@ -6,8 +6,8 @@ import { Config } from "aurelia-api"
 
 //const serviceUri = 'docs/efr-kb-rtu';
 const serviceUri = 'transfer-out';
-const serviceSearch = 'docs/efr-pk-pbj/submitted';
-const servicePrintUri = 'docs/print/efr-kb-rtu';
+const serviceSearch = 'docs/btq-pk-pbj/submitted';
+const servicePrintUri = 'docs/print/btq-kb-rtu';
 
 export class Service extends RestService {
 
@@ -37,7 +37,7 @@ export class Service extends RestService {
 
   getSPKByPackingList(packingList) {
     var config = Container.instance.get(Config);
-    var endpoint = config.getEndpoint("merchandiser").client.baseUrl + 'docs/efr-pk/received?keyword=' + packingList;
+    var endpoint = config.getEndpoint("merchandiser").client.baseUrl + 'docs/btq-pk/received?keyword=' + packingList;
     return super.get(endpoint);
   }
 
