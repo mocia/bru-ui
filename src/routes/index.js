@@ -7,6 +7,7 @@ var authRoutes = require("./auth");
 var finishingRoutes = require("./finishing");
 var generalInventoryRoutes = require("./general-inventory");
 var bateeqShopRoutes= require("./bateeqshop");
+var merchandiserRoutes=require("./merchandiser");
 
 // export default [].concat( nmasterRoutes, publicRoutes, gudangPusatRoutes, tokoRoutes, nmerchandiserRoutes, gpurchasingRoutes, garmentproductionRoutes, laporanRoutes, finishingRoutes);
 export default [].concat(
@@ -18,7 +19,8 @@ export default [].concat(
   laporanRoutes,
   authRoutes,
   generalInventoryRoutes,
-  bateeqShopRoutes
+  bateeqShopRoutes,
+  merchandiserRoutes
 );
 
 // export default [].concat(nmasterRoutes, publicRoutes, gudangPusatRoutes, laporanRoutes, reportRoutes, designerRoutes, merchandiserRoutes, finishingRoutes, generalInventoryRoutes, authRoutes, purchaseRoutes, npurchaseRoutes, nmasterplan, expeditionRoutes, accountingRoutes, customersRoutes, generalSettingRoutes, bateeqshopReportRoutes, promotionRoutes, nmerchandiserRoutes, nsalesRoutes, gpurchasingRoutes, garmentproductionRoutes);

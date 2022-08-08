@@ -8,7 +8,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "pemasukan supplier",
-            permission: { "C.01": 1 ,"GP.01":1},
+            permission: { "C.01": 1 ,"FNG.01": 1},
             iconClass: 'fa fa-clone'
         }
     },

@@ -34,7 +34,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "gudang pusat",
-            permission: { "C.01":1,"GP.01":1 },
+            permission: { "C.01":1,"GDG.01": 1, "GDG.02": 1, "GDG.03": 1, "GDG.04": 1, "GDG.05": 1},
             iconClass: 'fa fa-bank'
         }
     }, 
@@ -58,7 +58,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "gudang pusat",
-            permission: { "C.01":1,"GP.01":1 },
+            permission: { "C.01":1,"GDG.01": 1, "GDG.02": 1, "GDG.03": 1, "GDG.04": 1, "GDG.05": 1 },
             iconClass: 'fa fa-bank'
         }
     },
@@ -71,7 +71,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "gudang pusat",
-            permission: { "C.01":1,"GP.01":1 },
+            permission: { "C.01":1,"GDG.01": 1, "GDG.02": 1, "GDG.03": 1, "GDG.04": 1, "GDG.05": 1 },
             iconClass: 'fa fa-bank'
         }
     },
@@ -84,7 +84,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "gudang pusat",
-            permission: { "C.01":1,"GP.01":1 },
+            permission: { "C.01":1,"GDG.01": 1, "GDG.02": 1, "GDG.03": 1, "GDG.04": 1, "GDG.05": 1 },
             iconClass: 'fa fa-bank'
         }
     },
@@ -97,7 +97,7 @@ module.exports = [
         auth: true,
         settings: {
             group: "gudang pusat",
-            permission: { "C.01":1,"GP.01":1 },
+            permission: { "C.01":1,"GDG.01": 1, "GDG.02": 1, "GDG.03": 1, "GDG.04": 1, "GDG.05": 1 },
             iconClass: 'fa fa-bank'
         }
     }
