@@ -35,8 +35,8 @@ export async function configure(aurelia) {
       var inventory = "https://com-bru-service-warehouse-dev.azurewebsites.net/v1/";
       var merchandiser = "https://com-bru-service-warehouse-dev.azurewebsites.net/v1/";
       var sales = "https://com-bru-service-pos-dev.azurewebsites.net/v1/";
-      //BATEEQSHOP
       
+      //BATEEQSHOP
       var voucher= "https://com-bateeqshop-service-voucher.azurewebsites.net/v1/";
       var customers = "https://com-bateeqshop-service-auth.azurewebsites.net/v1/";
       var productBateeqshop= "https://com-bateeqshop-service-product.azurewebsites.net/v1/";
