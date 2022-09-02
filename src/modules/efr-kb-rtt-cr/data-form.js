@@ -9,6 +9,8 @@ export class DataForm {
     @bindable error = {};
     @bindable source;
     @bindable item;
+
+    manual = true;
     dataSource = {};
     sources = [];
     destinations = [];
@@ -19,42 +21,22 @@ export class DataForm {
     firstPrice = 0;
     indexSource = 0;
     hasFocus = true;
+
+    controlOptions = {
+      label: {
+        length: 4,
+      },
+      control: {
+        length: 4,
+      },
+    };
+
     constructor(router, service) {
         this.router = router;
         this.service = service;
     }
     sumTotalQty;
     sumPrice;
-
-    // getStorage(config) {
-    //     return new Promise((resolve, reject) => {
-    //         var getStorages = [];
-    //         if (config.source.type && config.source.type == "selection") {
-    //             for (var sourceId of config.source.value) {
-    //                 getStorages.push(this.service.getStorageById(sourceId.toString()));
-    //                 this.indexSource++;
-    //             }
-    //         }
-    //         else {
-    //             if (config.source.value) {
-    //                 getStorages.push(this.service.getStorageById(config.source.value.toString()));
-    //                 this.indexSource++
-    //             }
-    //         }
-    //         var getStoragesDestination = [];
-    //         if (config.destination.type && config.destination.type == "selection") {
-    //             for (var destinationId of config.destination.value) {
-    //                 getStorages.push(this.service.getStorageById(destinationId.toString()));
-    //             }
-    //         }
-    //         else {
-    //             if (config.destination.value) {
-    //                 getStorages.push(this.service.getStorageById(config.destination.value.toString()));
-    //             }
-    //         }
-    //         resolve(Promise.all(getStorages));
-    //     })
-    // }
 
     get itemLoader() {
       return ItemLoader;
@@ -185,92 +167,6 @@ export class DataForm {
         //    this.expeditionServices = result;
         //  })
     }
-    
-    // barcodeChanged(newValue, oldValue) {
-    //   var selectedSupplier = newValue;
-    //   if (newValue) {
-    //     var _data = this.data.items.find((item) => item.code === selectedSupplier.code);
-    //     if (!_data) {
-    //       let args = {
-    //         itemData: newValue,
-    //         source: this.data.source._id,
-    //       };
-    //       this.service.getByCode(args).then(result => {
-    //         //var datas = result;
-    //         this.sumTotalQty = 0;
-    //         this.sumPrice = 0;
-    //         if (result.length > 0) {
-    //           for (var datas of result) {
-    //             this.data.items.push({
-    //               item: datas.item,
-    //               itemInternationalCOGS: datas.itemInternationalCOGS,
-    //               itemInternationalRetail: datas.itemInternationalRetail,
-    //               itemInternationalSale: datas.itemInternationalSale,
-    //               itemInternationalWholeSale: datas.itemInternationalWholeSale,
-    //               quantity: datas.quantity,
-    //               availablequantity: datas.quantity
-
-    //             })
-    //             this.sumTotalQty = this.sumTotalQty + parseInt(datas.quantity);
-    //             this.sumPrice += datas.item.domesticSale * datas.quantity;
-    //           }
-
-    //         } else {
-    //           alert("Stock Inventory Kosong")
-    //         }
-    //       })
-    //     }
-
-    //   } else {
-    //     //this.data.supplier = {};
-    //     //this.data.items = [];
-    //     //this.data.supplierId = undefined;
-    //   }
-    //   this.makeTotal(this.data.items);
-    // }
-    // async barcodeChoose(e) {
-    //     var itemData = e.target.value;
-    //     this.price = 0;
-    //     if (itemData && itemData.length >= 13) {
-    //         var fgTemp = await this.service.getByCode(itemData);
-    //         if (fgTemp != undefined) {
-    //             if (Object.getOwnPropertyNames(fgTemp).length > 0) {
-    //                 var fg = fgTemp[0];
-    //                 this.price = fg.domesticSale;
-    //                 if (fg != undefined && Object.getOwnPropertyNames(fg).length > 0) {
-    //                     var newItem = {};
-    //                     var _data = this.data.items.find((item) => item.code === fg.code);
-    //                     if (!_data) {
-    //                         this.qtyFg = 0;
-    //                         this.price = 0;
-    //                         newItem.item = fg._id;
-    //                         newItem.availableQuantity = 0;
-    //                         var result = await this.service.getDataInventory(this.dataSource._id, newItem.itemId);
-    //                         if (result != undefined) {
-    //                             newItem.availableQuantity = result.quantity;
-    //                         }
-    //                         newItem.name = fg.name;
-    //                         newItem.code = fg.code;
-    //                         this.qtyFg = this.qtyFg + 1;
-    //                         newItem.quantity = 1;
-    //                         newItem.price = parseFloat(fg.domesticSale)
-    //                         newItem.remark = "";
-    //                         this.data.items.push(newItem);
-    //                     } else {
-    //                         this.firstPrice = 0;
-    //                         this.qtyFg = parseInt(_data.quantity) + 1;
-    //                         this.firstPrice = this.qtyFg * this.price
-    //                         _data.price = parseFloat(this.firstPrice)
-    //                         _data.quantity = this.qtyFg;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         this.makeTotal(this.data.items);
-    //         this.barcode = "";
-    //     }
-
-    // }
 
     async barcodeChoose(e) {
       var newValue = e.target.value;
@@ -279,7 +175,7 @@ export class DataForm {
          itemData: newValue.toString().trim(),
          source: this.data.source._id,
         };
-        //var _data = this.data.items.find((item) => item.code === selectedSupplier.code);
+        
         this.service.getByCode(args).then(result => {
           if (result.length > 0) {
             for (var datas of result) {
@@ -304,7 +200,8 @@ export class DataForm {
                 this.sumPrice += _data.item.domesticSale * (datas.quantity>0? 1 : 0);
               }
             }
-          } else {
+          } 
+          else {
             alert("Stock Inventory Kosong")
           }
         })
@@ -314,61 +211,53 @@ export class DataForm {
       }
     }
 
-    // async nameChoose(e) {
-    //     this.hasFocus = false;
-    //     var itemData = e.detail;
-    //     if (itemData != undefined) {
-    //         if (Object.getOwnPropertyNames(itemData).length > 0) {
-    //             var newItem = {};
-    //             var _data = this.data.items.find((item) => item.code === itemData.code);
-    //             if (!_data) {
-    //                 this.qtyFg = 0;
-    //                 this.price = 0;
-    //                 newItem.itemId = itemData._id;
-    //                 newItem.availableQuantity = 0;
-    //                 var result = await this.service.getDataInventory(this.dataSource._id, newItem.itemId);
-    //                 if (result != undefined) {
-    //                     newItem.availableQuantity = result.quantity;
-    //                 }
-    //                 newItem.name = itemData.name;
-    //                 newItem.code = itemData.code;
-    //                 newItem.quantity = 1;
-    //                 this.qtyFg = this.qtyFg + 1;
-    //                 this.price = itemData.domesticSale;
-    //                 newItem.price = parseFloat(itemData.domesticSale);
-    //                 newItem.remark = "";
-    //                 this.data.items.push(newItem);
-    //             }
-    //             this.makeTotal(this.data.items);
-    //             this.item = null;
-    //         }
-    //     }
+    async barcodeManual(){
+      var newValue = this.barcode;
+      let args = {
+        itemData: newValue.toString().trim(),
+        source: this.data.source._id,
+      };
+        
+      this.service.getByCode(args).then(result => {
+        if (result.length > 0) {
+          for (var datas of result) {
+            var _data = this.data.items.find((item) => item.item.code === datas.item.code);
+            if(!_data) {
+              this.data.items.push({
+                item: datas.item,
+                itemInternationalCOGS: datas.itemInternationalCOGS,
+                itemInternationalRetail: datas.itemInternationalRetail,
+                itemInternationalSale: datas.itemInternationalSale,
+                itemInternationalWholeSale: datas.itemInternationalWholeSale,
+                quantity: datas.quantity > 0 ? 1 : 0,
+                availablequantity: datas.quantity
+              })
+                
+              this.sumTotalQty = this.sumTotalQty + parseInt(datas.quantity>0? 1 : 0);
+              this.sumPrice += datas.item.domesticSale * (datas.quantity>0? 1 : 0);
 
-    // }
+            } else {
+              _data.quantity++;
+              this.sumTotalQty = this.sumTotalQty + parseInt(datas.quantity>0? 1 : 0);
+              this.sumPrice += _data.item.domesticSale * (datas.quantity>0? 1 : 0);
+            }
+          }
+          this.barcode = "";
+        } else {
+          alert("Stock Inventory Kosong")
+        }
+      })
+
+      this.makeTotal(this.data.items);
+    }
 
     async qtyChange(code, qty) {
-        // var barcode = code;
-        // var quantity = qty;
-        // this.price = 0;
-        // if (quantity != undefined) {
-        //     var fgTemp = await this.service.getByCode(code);
-        //     var fg = fgTemp[0];
-        //     this.price = fg.domesticSale;
-        //     var newItem = {};
-        //     var _data = this.data.items.find((item) => item.code === barcode);
-        //     if (_data) {
-        //         this.price = parseInt(_data.quantity) * this.price
-        //         _data.price = parseFloat(this.price);
-        //     }
-        // }
-        // this.makeTotal(this.data.items);
         var barcode = code;
         var quantity = qty;
         if (quantity != undefined) {
           var _data = this.data.items.find((item) => item.item.code === barcode);
           if (_data) {
             _data.quantity = parseFloat(quantity);
-            //_data.price = _data.item.domesticSale * quantity;
           }
         }
         this.makeTotal(this.data.items);
@@ -390,46 +279,6 @@ export class DataForm {
       this.data.items.splice(itemIndex, 1);
       this.makeTotal(this.data.items);
     }
-
-    // map(result) {
-    //     return result.data.map(item => {
-    //         return {
-    //             _id: item.articleVariantId,
-    //             name: item.articleVariant.name,
-    //             articleVariant: item.articleVariant
-    //         }
-    //     });
-    // }
-
-    // sourceChanged(newValue, oldValue) {
-    //     let sourceCode = newValue.code;
-    //     let nama = sourceCode.split("(");
-    //     this.service.getSource(nama[0])
-    //         .then(storage => {
-    //             this.dataSource = storage[0];
-    //             this.data.source = this.dataSource;
-    //             this.data.items = [];
-    //             this.sumTotalQty = 0;
-    //             this.sumPrice = 0;
-    //             var sourcesTemp = this.sources;
-    //             this.sources = [];
-    //             var index = 0;
-    //             for (var source of sourcesTemp) {
-    //                 if (source.name === storage[0].name) {
-    //                     this.sources.splice(0, 0, source);
-    //                 } else {
-    //                     index = index + 1;
-    //                     this.sources.splice(index, 0, source);
-    //                 }
-    //             }
-    //             this.sources = this.sources.map(source => {
-    //                 source.toString = function () {
-    //                     return this.name;
-    //                 }
-    //                 return source;
-    //             })
-    //         })
-    // }
 }
 
 
