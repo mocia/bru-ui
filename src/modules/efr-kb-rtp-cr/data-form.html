@@ -5,7 +5,8 @@
           value.bind="data.reference" 
           error.bind="error.reference" 
           read-only.bind="readOnly" 
-          aria-placeholder="Packing List SPK">
+          placeholder="Packing List SPK"
+          options.bind="controlOptions">
         </au-textbox>
 
         <au-dropdown 
@@ -14,10 +15,16 @@
           items.bind="sources" 
           read-only.bind="data.items.length>0"
           key="code" 
-          text="name">
+          text="name"
+          options.bind="controlOptions">
         </au-dropdown>
 
-        <au-dropdown label="Tujuan Penyimpanan" value.bind="data.destination" items.bind="destinations"></au-dropdown>
+        <au-dropdown 
+          label="Tujuan Penyimpanan"
+          value.bind="data.destination" 
+          items.bind="destinations"
+          options.bind="controlOptions">
+        </au-dropdown>
 
         <au-dropdown 
           value.bind="data.expeditionService" 
@@ -26,19 +33,45 @@
           items.bind="expeditionServices"
           key="code" 
           text="name" 
-          read-only.bind="readOnly">
+          read-only.bind="readOnly"
+          options.bind="controlOptions">
         </au-dropdown>
 
-        <p class="col-md-1">Barcode</p>
-        <input type="text" focus.bind="hasFocus" value.bind="barcode" class="col-md-3" aria-placeholder="Barcode" input.delegate="barcodeChanged($event)"></input>
-      
+        <!-- <au-checkbox
+          label="Manual?"
+          value.bind="manual"
+          options.bind="controlOptions">
+        </au-checkbox> -->
 
+        <au-textbox
+          label="Barcode"
+          type="text" 
+          focus.bind="hasFocus" 
+          value.bind="barcode"
+          if.bind="manual"
+          placeholder="cari Barcode" 
+          options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+          label="Barcode"
+          type="text" 
+          focus.bind="hasFocus" 
+          value.bind="barcode" 
+          if.bind="!manual"
+          placeholder="cari Barcode" 
+          input.delegate="barcodeChoose($event)"
+          options.bind="controlOptions">
+        </au-textbox>
+
+        <!-- <p class="col-md-1">Barcode</p>
+        <input type="text" focus.bind="hasFocus" value.bind="barcode" class="col-md-3" aria-placeholder="Barcode" input.delegate="barcodeChanged($event)"></input> -->
+      
         <!-- <input type="text" focus.bind="hasFocus" value.bind="barcode" class="col-md-3" aria-placeholder="Barcode" input.delegate="barcodeChoose($event)"></input> -->
         <!-- <finishedgoods-auto-suggest label="Nama Barang" value.bind="item" class="col-md-5" read-only.bind="readOnly" change.delegate="nameChoose($event)"></finishedgoods-auto-suggest> -->
         
         <au-autocomplete 
           value.bind="item" 
-          class="col-md-5" 
           error.bind="error.supplier" 
           label="Nama Barang"
           loader.bind="itemLoader" 
@@ -48,6 +81,8 @@
           read-only.bind="readOnly || isEdit" 
           options.bind="controlOptions">
         </au-autocomplete>
+
+        <button class="btn btn-success" click.delegate="barcodeManual()" if.bind="manual">Cari</button>
 
         <numeric label="Total Kuantitas:" read-only.bind="true" value.bind="sumTotalQty" class="col-md-5"></numeric>
         <numeric label="Total Harga:" read-only.bind="true" value.bind="sumPrice" class="col-md-3"></numeric>

@@ -1,41 +1,72 @@
 <template>
 </style>
     <form class="form-horizontal">
-        <textbox 
+        <au-textbox 
             label="Nomor Referensi" 
             value.bind="data.reference" 
             error.bind="error.reference" 
             read-only.bind="readOnly" 
-            aria-placeholder="Packing List SPK">
-        </textbox>
-        <dropdown 
+            aria-placeholder="Packing List SPK"
+            options.bind="controlOptions">
+        </au-textbox>
+        <au-dropdown 
             label="Sumber Penyimpanan" 
             value.bind="data.source" 
             items.bind="sources" 
             key="code" 
-            text="name">
-        </dropdown>
-        <dropdown 
+            text="name"
+            options.bind="controlOptions">
+        </au-dropdown>
+        <au-dropdown 
             label="Tujuan Penyimpanan" 
             value.bind="data.destination" 
-            items.bind="destinations">
-        </dropdown>
-        <p class="col-md-1">Barcode</p>
-        <input 
+            items.bind="destinations"
+            options.bind="controlOptions">
+        </au-dropdown>
+        <!-- <au-checkbox
+            label="Manual?"
+            value.bind="manual"
+            options.bind="controlOptions">
+        </au-checkbox> -->
+
+        <au-textbox
+            label="Barcode"
+            type="text" 
+            focus.bind="hasFocus" 
+            value.bind="barcode"
+            if.bind="manual"
+            placeholder="cari Barcode" 
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Barcode"
             type="text" 
             focus.bind="hasFocus" 
             value.bind="barcode" 
-            class="col-md-3" 
-            aria-placeholder="Barcode" 
-            input.delegate="barcodeChoose($event)">
-        </input>
+            if.bind="!manual"
+            placeholder="cari Barcode" 
+            input.delegate="barcodeChoose($event)"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="item" 
+            error.bind="error.supplier" 
+            label="Nama Barang"
+            loader.bind="itemLoader" 
+            text.bind="itemView" 
+            placeholder="cari Barang" 
+            key="Name"
+            read-only.bind="readOnly || isEdit" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <button class="btn btn-success" click.delegate="barcodeManual()" if.bind="manual">Cari</button>
         
         <!-- <input type="text" focus.bind="hasFocus" value.bind="barcode" class="col-md-3" aria-placeholder="Barcode" ></input> -->
         <!-- <finishedgoods-auto-suggest label="Nama Barang" value.bind="item" class="col-md-5" read-only.bind="readOnly" change.delegate="nameChoose($event)"></finishedgoods-auto-suggest> -->
-        <au-autocomplete value.bind="item" class="col-md-5" error.bind="error.supplier" label="Nama Barang"
-          loader.bind="itemLoader" text.bind="itemView" placeholder="cari Barang" key="Name"
-          read-only.bind="readOnly || isEdit" options.bind="controlOptions">
-        </au-autocomplete>
+        
         <numeric label="Total Kuantitas:" read-only.bind="true" value.bind="sumTotalQty" class="col-md-5"></numeric>
         <numeric label="Total Harga:" read-only.bind="true" value.bind="sumPrice" class="col-md-3"></numeric>
     </form>
