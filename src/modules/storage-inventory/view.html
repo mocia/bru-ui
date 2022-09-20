@@ -32,46 +32,19 @@
         </div> -->
         
     </form> 
-    <!-- <au-table 
+    <au-table 
         view-model.ref="models" 
         data.bind="tableData" 
+        page-size="25" 
         columns.bind="columns" 
-        page-size="15">
-    </au-table> -->
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>No.</th>  
-                <th>Tanggal</th>
-                <th>Referensi</th>
-                <th>Tipe</th>
-                <th>Sebelum</th>
-                <th>Kuantitas</th>
-                <th>Setelah</th>
-                <th>Deskripsi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr repeat.for="item of data">
-                <td>${(info.page-1)*info.size+$index+1}</td>
-                <td>${item.Date}</td>
-                <td>${item.Reference}</td>
-                <td>${item.Type}</td>
-                <td>${item.Before}</td>
-                <td>${item.Quantity}</td>
-                <td>${item.After}</td>
-                <td>${item.Remark}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
-       Tidak ada aliran stok.
-    </div> 
-    <hr/>
+        options.bind="options">
+    </au-table>
+    
+    
     <div class="btn-group pull-right">
         <button click.delegate="list()" class="btn btn-success btn-sm pull-right">Kembali</button>
         &nbsp;
         <button style="margin-right:10px; "click.delegate="moveexcel()" class="btn btn-success btn-sm pull-right">Cetak Excel</button>
     </div>
-    <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+    
 </template>
