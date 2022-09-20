@@ -39,6 +39,19 @@ module.exports = [
     //     }
     // },
     {
+        route: 'laporan-mutasi-barang-per-bulan',
+        name: 'laporan-mutasi-barang-per-bulan',
+        moduleId: './modules/laporan/movement-inventory/index',
+        nav: true,
+        title: 'Laporan Mutasi Barang Per Bulan',
+        auth: true,
+        settings: {
+            group: "laporan",
+            permission: { "C.01":1,"GP.01":1,"SA.01":1,"ON.01":1,"PU.01":1,"VIP.01":1,"CN.01":1 },
+            iconClass: 'fa fa-table'
+        }
+    },
+    {
         route: 'distribusi-barang',
         name: 'distribusi-barang',
         moduleId: './modules/laporan/distribusi-barang/index',
