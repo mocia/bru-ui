@@ -4,6 +4,7 @@ import { RestService } from "../../utils/rest-service";
 import { Container } from "aurelia-dependency-injection";
 import { Config } from "aurelia-api";
 
+const serviceUri = 'pageSize';
 export class Service extends RestService {
   constructor(http, aggregator, config, endpoint) {
     super(http, aggregator, config, "customers");

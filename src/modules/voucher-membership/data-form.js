@@ -1,24 +1,16 @@
 import { inject, bindable, containerless, computedFrom, BindingEngine } from 'aurelia-framework'
 import { Service } from "./service";
-import { ServiceMembership } from "./service-membership";
 
-const ProductLoader = require('../../loader/account-loader');
+const ProductLoader = require('../../loader/product-list-bateeqshop-loader');
 
 @containerless()
-@inject(Service, BindingEngine,ServiceMembership)
+@inject(Service, BindingEngine)
 export class DataForm {
     @bindable readOnly;
     @bindable data = {};
     @bindable error = {};
     @bindable title;
-    @bindable isVoucher = false;
-
-    formOptions = {
-        cancelText: "Kembali",
-        saveText: "Simpan",
-        deleteText: "Hapus",
-        editText: "Ubah",
-    }
+    @bindable isProduct = false;
 
     controlOptions = {
         label: {
@@ -29,53 +21,40 @@ export class DataForm {
         }
     }
 
-    productGift = [];
+    voucherTypeSelection = ["Nominal", "Product"];
 
-    voucherTypeSelection = [
-        { label: "Nominal", value: "nominal" },
-        { label: "Voucher", value: "voucher" }
-    ];
-    
-    assignToMembership = [];
-
-    constructor(service, bindingEngine,serviceMembership) {
+    constructor(service, bindingEngine) {
         this.service = service;
         this.bindingEngine = bindingEngine;
-        this.serviceMembership = serviceMembership;
     }
 
     async bind(context) {
         this.context = context;
         this.data = this.context.data;
         this.error = this.context.error;
-        this.serviceMembership.getListMembership({})
-            .then(result =>{
-                console.log("list membership "+result);
-                this.assignToMembership = result.map(s=>{
-                    return {
-                        label : s.name,
-                        value : s.id,
-                        checked : false
-                    }
-                });
-            });
     }
 
     @bindable voucherType
     voucherTypeChanged(newVal, oldVal) {
-        this.data.voucherType = newVal.value;
-        if (newVal.value == "voucher")
-            this.isVoucher = true;
+        this.data.voucherType = newVal;
+        if (newVal.toLowerCase() == "product")
+            this.isProduct = true;
         else
-            this.isVoucher = false;
+            this.isProduct = false;
     }
 
-    productChange(e) {
-        console.log(selecdtedProductGift);
+    @bindable selectedProductGift;
+    selectedProductGiftChanged(newVal, oldVal) {
+        if (newVal) {
+            if (this.context)
+                this.context.productGift.push({ id: newVal.id, name: newVal.name })
+            this.selectedProductGift = "";
+        }
     }
 
-    deleteProductGift(index) {
-        this.productGift.splice(index, 1);
+    removeProductGift(index) {
+        if (this.context)
+            this.context.productGift.splice(index, 1);
     }
 
     get productLoader() {
@@ -83,10 +62,6 @@ export class DataForm {
     }
 
     productView(data) {
-        return data.testA + data.testB;
-    }
-
-    addProductInput(data) {
-        this.productGift.push(data);
+        return data.name;
     }
 } 
