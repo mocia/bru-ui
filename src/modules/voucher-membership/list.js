@@ -1,38 +1,38 @@
-import { inject } from "aurelia-framework";
-import { Service } from "./service";
+import { inject, bindable } from "aurelia-framework";
+import { Service, ServiceMembership } from "./service";
 import { Router } from "aurelia-router";
 import moment from "moment";
-import { resolve } from "bluebird";
+import numeral from 'numeral';
 
-@inject(Router, Service)
+@inject(Router, Service, ServiceMembership)
 export class List {
-  // @bindable flag = false;
+  @bindable flag = false;
 
   // info = { page: 1, size: 25 };
 
   context = ["Detail"];
 
   columns = [
-    { title: "Nominal", field: "nominal" },
-    { title: "Voucher Type", field: "voucher" },
-    { title: "Point Exchanged", field: "pointExchanged" },
+    { title: "Voucher Name", field: "discountName" },
+    {
+      title: "Nominal", field: "nominal", formatter: function (value, data, index) {
+        return numeral(value).format('0,000.00');
+      }
+    },
+    { title: "Voucher Type", field: "discountType" },
+    {
+      title: "Point Exchanged", field: "exchangePoint", formatter: function (value, data, index) {
+        return numeral(value).format('0,000.00');
+      }
+    },
     { title: "Total Claimed", field: "totalClaimed" },
-    { title: "Total Used", field: "totalUsed" },
-    { title: "Member", field: "member" }
+    { title: "Total Used", field: "totalUse" },
+    { title: "Member", field: "membership" }
   ];
 
-  voucherType = [
-    { label: "Choose voucher..", value: "" },
-    { label: "Nominal", value: "nominal" },
-    { label: "Voucher", value: "voucher" }
-  ];
+  voucherType = ["", "Nominal", "Product"];
 
-  tierMembershipType = [
-    { label: "Choose membership..", value: "" },
-    { label: "Silver", value: "silver" },
-    { label: "Gold", value: "gold" },
-    { label: "Platinum", value: "platinum" }
-  ];
+  tierMembershipType = ["", "Silver", "Gold", "Platinum"];
 
   controlOptions = {
     label: {
@@ -43,34 +43,18 @@ export class List {
     },
   };
 
-  data = [
-    {
-      id: "1",
-      nominal: "nominal",
-      voucher: "voucher",
-      pointExchanged: "pointExchanged",
-      totalClaimed: "totalClaimed",
-      totalUsed: "totalUsed",
-      member: "member"
-    },
-    {
-      id: "2",
-      nominal: "nominal",
-      voucher: "voucher",
-      pointExchanged: "pointExchanged",
-      totalClaimed: "totalClaimed",
-      totalUsed: "totalUsed",
-      member: "member"
-    }
-  ];
-
-  constructor(router, service) {
+  constructor(router, service, serviceMembership) {
     this.service = service;
     this.router = router;
+    this.serviceMembership = serviceMembership;
   }
 
-  activate() {
-    // this.searching();
+  async activate() {
+    this.membershipResult = await this.serviceMembership.getListMembership({})
+      .then(result => {
+        console.log(result)
+        return result
+      });
   }
 
   search() {
@@ -79,19 +63,52 @@ export class List {
   }
 
   loader = (info) => {
-    if (info.sort) order[info.sort] = info.order;
+    // if (info.sort) order[info.sort] = info.order;
 
-    let arg = {
+    let args = {
+      page: parseInt(info.offset / info.limit, 10) + 1,
+      limit: info.limit
     };
 
-    return { total: this.data.length, data: this.data };
-    // return this.flag ? this.service.search(arg).then((result) => {
-    //     return {
-    //       total: result.info.Count,
-    //       data: result.data,
-    //     };
-    //   })
-    // : { total: 0, data: [] };
+    if (this.flag) {
+      if (this.info.startDate)
+        args.startDate = moment(this.info.startDate).format("YYYY/MM/DD");
+
+      if (this.info.endDate)
+        args.endDate = moment(this.info.endDate).format("YYYY/MM/DD");
+
+      if (this.info.voucherType) {
+        switch (this.info.voucherType.toLowerCase()) {
+          case "product":
+            args.voucherType = "2";
+            break;
+          case "nominal":
+            args.voucherType = "9";
+            break;
+          default:
+            args.voucherType = "8";
+            break;
+        }
+      }
+
+      if (this.info.tierMembership)
+        args.membershipId = this.membershipResult.find(x => x.name.toLowerCase() == this.info.tierMembership.toLowerCase()).id;
+    }
+
+    return this.service.search(args)
+      .then((result) => {
+        let data = result.data.map((val) => {
+          val.membership = val.membership.split(',')
+            .map((id) => {
+              return this.membershipResult.find(x => x.id == id).name
+            })
+          return val
+        })
+        return {
+          total: result.total,
+          data: data,
+        };
+      });
   };
 
   contextClickCallback(event) {
@@ -107,18 +124,11 @@ export class List {
   reset() {
     this.flag = false;
     this.error = {};
-    this.info.startDate = undefined;
-    this.info.endDate = undefined;
-    this.info.voucherType = { label: "Choose voucher..", value: "" };
-    this.info.tierMembership = { label: "Choose membership..", value: "" };
+    this.info = {};
     this.tableList.refresh();
   }
 
   create() {
     this.router.navigateToRoute("create");
   }
-
-  // view(id) {
-  //   this.router.navigateToRoute("view", { id: id });
-  // }
 }

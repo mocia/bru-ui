@@ -94,8 +94,8 @@ export class List {
         }
       }
 
-      args.startDate = this.info.startDate ? moment(this.info.startDate).format("DD-MM-YYYY") : "01/01/0001"
-      args.endDate = this.info.endDate ? moment(this.info.endDate).format("DD-MM-YYYY") : "01/01/0001"
+      args.startDate = this.info.startDate ? moment(this.info.startDate).format("MM/DD/YYYY") : "01/01/0001"
+      args.endDate = this.info.endDate ? moment(this.info.endDate).format("MM/DD/YYYY") : "01/01/0001"
       args.discountCode = this.info.discountCode ? this.info.discountCode : ""
       args.discountName = this.info.discountName ? this.info.discountName : ""
     }

@@ -3,12 +3,7 @@
     .btn-center {
       position: relative;
       height: 70px;
-    }
-
-    .btn-search {
-      position: absolute;
-      left: 45%;
-      width: 10%;
+      text-align: center;
     }
   </style>
 
@@ -43,8 +38,6 @@
           value.bind="info.voucherType"
           items.bind="voucherType"
           options.bind="controlOptions"
-          key="value"
-          text="label"
         >
         </au-dropdown>
 
@@ -53,16 +46,13 @@
           value.bind="info.tierMembership"
           items.bind="tierMembershipType"
           options.bind="controlOptions"
-          key="value"
-          text="label"
         >
         </au-dropdown>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="contact" class="col-sm-5 control-label"></label>
-      <div class="col-sm-3">
+      <div class="btn-center">
         <button click.delegate="search()" class="btn btn-success">Cari</button>
         <button click.delegate="reset()" class="btn btn-warning">Reset</button>
       </div>
@@ -72,13 +62,12 @@
     view-model.ref="tableList"
     data.bind="loader"
     columns.bind="columns"
-    sortable.bind="true"
+    sortable.bind="false"
     page-size="25"
     context.bind="context"
     context-click.delegate="contextClickCallback($event)">
-
         <div slot="toolbar" class="btn-group">
-            <button class="btn btn-info" click.delegate="create()">Buat</button>
+            <button class="btn btn-primary" click.delegate="create()">Buat</button>
         </div>
     </au-table>
   </au-input-form>

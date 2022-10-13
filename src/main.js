@@ -42,7 +42,7 @@ export async function configure(aurelia) {
       var productBateeqshop= "https://com-bateeqshop-service-product.azurewebsites.net/v1/";
       var rewardPoints = "https://com-bateeqshop-service-voucher.azurewebsites.net/v1/api/";
       var generalSetting = "https://com-bateeqshop-service-general.azurewebsites.net/v1/generalSetting/";
-
+      var authBateeqshop = "https://com-bateeqshop-service-auth.azurewebsites.net/v1/";
       //Config API
       config.registerEndpoint("auth", auth);
       config.registerEndpoint("master", master);
@@ -55,6 +55,7 @@ export async function configure(aurelia) {
       config.registerEndpoint("productBateeqshop",productBateeqshop);
       config.registerEndpoint("rewardPoints", rewardPoints);
       config.registerEndpoint("generalSetting",generalSetting);
+      config.registerEndpoint("authBateeqshop",authBateeqshop);
     })
     .plugin("aurelia-authentication", (baseConfig) => {
       baseConfig.configure(authConfig);
