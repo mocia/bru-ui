@@ -1,0 +1,70 @@
+<template>
+    <h3 class="page-header">Laporan Mutasi Barang Per Bulan</h3>
+
+    <form class="form-horizontal">
+            <au-dropdown value.bind="month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths" key="value" text="text"></au-dropdown>
+            <au-dropdown value.bind="year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value" text="text"></au-dropdown>
+            <!-- <div class="form-group">
+                <div class="col-sm-9">
+                    <button class="btn btn-success pull-right" click.delegate="showMovement()">Tampilkan</button>
+                    <button class="btn btn-success pull-right" click.delegate="downloadMovementExcel()">Cetak</button>
+                </div> -->
+                <!-- <div class="col-sm-3">
+
+                </div>
+            </div> -->
+    </form>
+    <div class="col-sm-12 form-group">
+        <button class="btn btn-success pull-right" click.delegate="downloadMovementExcel()">Cetak Excel</button>
+        <button style="margin-right:10px;" class="btn btn-success pull-right" click.delegate="showMovement()">Tampilkan</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>Tanggal</td>
+                    <td>Kode Toko</td>
+                    <td>Nama Toko</td>
+                    <td>Tujuan</td>
+                    <td>Barcode</td>
+                    <td>Nama Barang</td>
+                    <td>RO</td>
+                    <td>Harga</td>
+                    <td>Tipe</td>
+                    <td>Sebelum</td>
+                    <td>Kuantitas</td>
+                    <td>Sesudah</td>
+                    <td>Kode Referensi</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                        <td if.bind="item.datespan" rowspan="${item.datespan}">${item.count}</td>
+                        <!-- <td class="text-left" if.bind="item.datespan" rowspan="${item.datespan}">${item.Date | dateFormat:'D MMM YYYY'}</td> -->
+                        <td class="text-left" if.bind="item.datespan" rowspan="${item.datespan}">${item.Date}</td>
+                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.StorageCode}</td>
+                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.StorageName}</td>
+                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.DestinationName}</td>
+                        <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemCode}</td>
+                        <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemName}</td>
+                        <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemArticleRealizationOrder}</td>
+                        <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemDomesticSale}</td>
+                        <td class="text-left">${item.Type}</td>
+                        <td class="text-left">${item.Before}</td>
+                        <td class="text-left">${item.Quantity}</td>
+                        <td class="text-right">${item.After}</td>
+                        <td class="text-left">${item.Reference}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+        Tidak ada data.
+    </div>
+
+    <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+    <hr/>
+</template>

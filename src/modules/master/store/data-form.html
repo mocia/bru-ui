@@ -1,0 +1,179 @@
+<template>
+    <div class="row">
+      <div class="col-md-15">
+        <au-input-form 
+            title.bind="title"
+            with.bind="context"
+            options.bind="formOptions">
+            <div class="row">
+                <div class="col-md-5">
+                    <au-autocomplete 
+                        value.bind="selectedStorage"
+                        label="Storage" 
+                        loader.one-time="storageLoader" 
+                        read-only.bind="readOnly || data.Id"
+                        error.bind="error.storage"
+                        text.bind="storageView"
+                        options.bind="controlOptions">
+                    </au-autocomplete>
+
+                    <au-textbox 
+                        label="Kode"
+                        value.bind="data.code"
+                        error.bind="error.code"
+                        read-only.bind="true"
+                    ></au-textbox>
+            
+                    <au-textbox 
+                        label="Nama"
+                        value.bind="data.name"
+                        error.bind="error.name"
+                        read-only.bind="true"
+                    ></au-textbox>
+
+                    <au-textbox
+                        label="Alamat"
+                        value.bind="data.address"
+                        error.bind="error.address"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+            
+                    <au-textbox
+                        label="City"
+                        value.bind="data.city"
+                        error.bind="error.city"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Latitude"
+                        value.bind="data.latitude"
+                        error.bind="error.latitude"
+                        format="0.000000000"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Longitude"
+                        value.bind="data.longitude"
+                        error.bind="error.longitude"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Phone"
+                        value.bind="data.phone"
+                        error.bind="error.phone"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Pic"
+                        value.bind="data.pic"
+                        error.bind="error.pic"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Store Area"
+                        value.bind="data.storeArea"
+                        error.bind="error.storeArea"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+
+                    <au-textbox
+                        label="Store Wide"
+                        value.bind="data.storeWide"
+                        error.bind="error.storeWide"
+                        read-only.bind="readOnly"
+                    ></au-textbox> 
+                </div>
+                <div class="col-md-5">
+                    <au-textbox
+                        label="Store Capital"
+                        value.bind="data.storeCapital"
+                        error.bind="error.storeCapital"
+                        read-only.bind="readOnly">
+                    </au-textbox> 
+
+                    <au-dropdown
+                        label="Store Category"
+                        value.bind="data.storeCategory"
+                        error.bind="error.storeCategory"
+                        read-only.bind="readOnly"
+                        items.bind="storeCategories"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-textbox
+                        label="Sales Target"
+                        value.bind="data.salesTarget"
+                        error.bind="error.salesTarget"
+                        read-only.bind="readOnly">
+                    </au-textbox> 
+
+                    <au-textbox
+                        label="Monthly Total Cost"
+                        value.bind="data.monthlyTotalCost"
+                        error.bind="error.monthlyTotalCost"
+                        read-only.bind="readOnly">
+                    </au-textbox> 
+
+                    <au-dropdown
+                        label="Sales Category"
+                        value.bind="data.salesCategory"
+                        error.bind="error.salesCategory"
+                        read-only.bind="readOnly"
+                        items.bind="salesCategories"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-dropdown
+                        label="Status"
+                        value.bind="data.status"
+                        error.bind="error.status"
+                        read-only.bind="readOnly"
+                        items.bind="statusOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-dropdown
+                        label="Online / Offline"
+                        value.bind="data.onlineOffline"
+                        error.bind="error.onlineOffline"
+                        read-only.bind="readOnly"
+                        items.bind="onlineOfflineOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-datepicker 
+                        label="Open Date" 
+                        value.bind="data.openedDate" 
+                        error.bind="error.openedDate" 
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                    <au-datepicker 
+                        label="Close Date" 
+                        value.bind="data.closedDate" 
+                        error.bind="error.closedDate" 
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                    <au-multiline
+                        label="Keterangan" 
+                        value.bind="data.description" 
+                        error.bind="error.description" 
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                    </au-multiline>
+                </div>
+        <template replaceable part="actions"></template>
+        
+        </au-input-form>
+      </div>
+    </div>
+  </template>
+  

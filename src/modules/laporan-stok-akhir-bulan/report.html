@@ -1,0 +1,19 @@
+<template>
+    <h3 class="page-header">Laporan Stok Akhir Bulan</h3>
+    
+    <form class="form-horizontal">
+            <au-dropdown value.bind="info.month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths" key="value" text="text"></au-dropdown>
+            <au-dropdown value.bind="info.year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value" text="text"></au-dropdown>
+            <div class="form-group">
+                <label for="contact" class="col-sm-5 control-label"></label>
+                <div class="col-sm-3">
+                    <button class="btn btn-success pull-right" click.delegate="showMonthlyOverallStock()">Tampilkan</button>
+                </div>
+            </div>
+    </form>
+
+    <au-table view-model.ref="models" data.bind="tableData" columns.bind="columns" context.bind="detail" context-click.delegate="contextCallback($event)"
+        page-size="25">
+    </au-table>
+
+</template>
