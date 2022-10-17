@@ -102,7 +102,6 @@ export class Report {
 
         this.service.getMovement(args)
             .then(results => {
-
                 var rowDate=[];
                 var rowStorageDate=[];
                 var rowItemStorageDate=[];
@@ -117,7 +116,8 @@ export class Report {
 
                 for(var a of results.data) {
                     var date = a.Date.toString();
-                    var storageCode = a.StorageCode.toString();
+                    var source = a.SourceName.toString();
+                    var destination = a.DestinationName.toString();
                     var itemCode = a.ItemCode.toString();
 
                     if(!rowDate[date]){
@@ -129,39 +129,37 @@ export class Report {
                         rowDate[date]++;
                     }
 
-                    if(!rowStorageDate[date+storageCode]){
-                        rowStorageDate[date+storageCode]=1;
+                    if(!rowStorageDate[date+source+destination]){
+                        rowStorageDate[date+source+destination]=1;
                     }
                     else {
-                        rowStorageDate[date+storageCode]+=1;
+                        rowStorageDate[date+source+destination]+=1;
                     }
 
-                    if(!rowItemStorageDate[date+storageCode+itemCode]){
-                        rowItemStorageDate[date+storageCode+itemCode]=1;
+                    if(!rowItemStorageDate[date+source+destination+itemCode]){
+                        rowItemStorageDate[date+source+destination+itemCode]=1;
                     }
                     else{
-                        rowItemStorageDate[date+storageCode+itemCode]+=1;
+                        rowItemStorageDate[date+source+destination+itemCode]+=1;
                     }
                 }
 
                 for(var b of results.data) {
 
                     let date = results.data.find(o => o.Date == b.Date);
-
                         if(date){
                             date.datespan = rowDate[b.Date];
                         }
 
-                    let storageCode = results.data.find(o => o.Date + o.StorageCode == b.Date + b.StorageCode);
-                
+                    let storageCode = results.data.find(o => o.Date + o.SourceName + o.DestinationName == b.Date + b.SourceName + b.DestinationName);
+                               
                         if(date && storageCode){
-                            storageCode.storagespan = rowStorageDate[b.Date+b.StorageCode];
+                            storageCode.storagespan = rowStorageDate[b.Date+ b.SourceName + b.DestinationName];
                         }
-
-                    let itemCode = results.data.find(o => o.Date + o.StorageCode + o.ItemCode == b.Date + b.StorageCode + b.ItemCode);
-                    
+                    let itemCode = results.data.find(o => o.Date + o.SourceName + o.DestinationName + o.ItemCode == b.Date + b.SourceName + b.DestinationName + b.ItemCode);
+                     
                         if(date&&itemCode&&storageCode){
-                            itemCode.itemspan = rowItemStorageDate[b.Date+b.StorageCode+b.ItemCode];
+                            itemCode.itemspan = rowItemStorageDate[b.Date+ b.SourceName + b.DestinationName +b.ItemCode];
                         }
 
                     this.data.push(b);
@@ -169,7 +167,6 @@ export class Report {
 
                 this.usedMonth = month;
                 this.usedYear = year;
-
             })
             .catch(e => {
                 this.error = e;
