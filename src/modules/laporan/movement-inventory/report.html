@@ -25,8 +25,8 @@
                 <tr>
                     <td>No</td>
                     <td>Tanggal</td>
-                    <td>Kode Toko</td>
-                    <td>Nama Toko</td>
+                    <!-- <td>Kode Toko</td> -->
+                    <td>Asal</td>
                     <td>Tujuan</td>
                     <td>Barcode</td>
                     <td>Nama Barang</td>
@@ -44,8 +44,8 @@
                         <td if.bind="item.datespan" rowspan="${item.datespan}">${item.count}</td>
                         <!-- <td class="text-left" if.bind="item.datespan" rowspan="${item.datespan}">${item.Date | dateFormat:'D MMM YYYY'}</td> -->
                         <td class="text-left" if.bind="item.datespan" rowspan="${item.datespan}">${item.Date}</td>
-                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.StorageCode}</td>
-                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.StorageName}</td>
+                        <!-- <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.StorageCode}</td> -->
+                        <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.SourceName}</td>
                         <td class="text-left" if.bind="item.storagespan" rowspan="${item.storagespan}">${item.DestinationName}</td>
                         <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemCode}</td>
                         <td class="text-left" if.bind="item.itemspan" rowspan="${item.itemspan}">${item.ItemName}</td>
