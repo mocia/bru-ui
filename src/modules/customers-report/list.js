@@ -1,6 +1,7 @@
 import { inject } from "aurelia-framework";
 import { Service } from "./service";
 import { Router } from "aurelia-router";
+import moment from 'moment';
 
 @inject(Router, Service)
 export class List {
@@ -46,22 +47,7 @@ export class List {
 
   activate() {
     // this.searching();
-    this.data = [
-      {
-        name: "Aldi",
-        phoneNumber: "081298291282",
-        email: "aldi@gmail.com",
-        ordertotal: "Rp 20.000.000",
-        numberOfOrders: "300",
-      },
-      {
-        name: "Andi",
-        phoneNumber: "081928291282",
-        email: "andi@yahoo.com",
-        ordertotal: "Rp 2.000.000",
-        numberOfOrders: "30",
-      },
-    ];
+
   }
 
   search() {
@@ -81,7 +67,7 @@ export class List {
     // }
   }
 
-  async searching(type) {
+  async searching() {
     let args = {
       page: this.info.page,
       pageSize: this.info.size,
@@ -97,12 +83,13 @@ export class List {
     };
 
     this.service.search(args).then((result) => {
-      this.data = this.formatData(result.data.result);
-      if (type == "SEARCH") {
-        this.info.total = this.data.length;
-      } else {
-        this.info.total = result.total;
-      }
+      console.log(result);
+      // this.data = this.formatData(result.data.result);
+      // if (type == "SEARCH") {
+      //   this.info.total = this.data.length;
+      // } else {
+      //   this.info.total = result.total;
+      // }
     });
   }
 
