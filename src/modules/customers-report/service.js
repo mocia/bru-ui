@@ -4,7 +4,7 @@ import { RestService } from '../../utils/rest-service';
 import { Container } from 'aurelia-dependency-injection';
 import { Config } from "aurelia-api";
 
-const serviceUri = 'pageSize';
+const serviceUri = 'api/searchUser';
 const MaxWHServiceUri = 'max-wh-confirms';
 
 export class Service extends RestService {
@@ -18,8 +18,8 @@ export class Service extends RestService {
         return super.get(endpoint);
     }
 
-    searchWHConfirm(info) {
-        var endpoint = `${MaxWHServiceUri}`;
+    search(info) {
+        var endpoint = `${serviceUri}`;
         return super.list(endpoint, info);
     }
 

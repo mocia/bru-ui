@@ -5,7 +5,7 @@ import { Container } from 'aurelia-dependency-injection';
 import { Config } from "aurelia-api"
 
 
-const serviceUri = '/items/finished-goods';
+const serviceUri = 'items/finished-goods';
 
 export class Service extends RestService {
 
@@ -83,11 +83,13 @@ export class Service extends RestService {
       body: JSON.stringify(data)
     }
 
-    var promise = this.endpoint.client.fetch('upload/product-image', request);
+    var promise = this.endpoint.client.fetch('items/finished-goods/upload/image', request);
+    console.log(request);
     this.publish(promise);
     return promise.then(
       response => {
         this.publish(promise);
+      
         if (response) {
           return response.json().then(result => {
             if (result) {
