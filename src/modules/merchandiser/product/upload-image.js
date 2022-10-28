@@ -35,7 +35,9 @@ export class Upload {
     article_color = {};
     color = "#FF0000";
     ro = "";
-
+    itemFilter={
+        ImagePath: ""
+    }
     columns = [
         { header: "", value: "__check" },
         { header: "Code", value: "code" },
@@ -51,7 +53,8 @@ export class Upload {
 
         this.service.getColors()
             .then(result => {
-                this.article_colors = result.data.data;
+              
+                this.article_colors = result.data;
                 if (this.article_colors.length > 0)
                     this.article_color = this.article_colors[0];
                 this.article_colors.forEach((s) => {
@@ -119,6 +122,7 @@ export class Upload {
                     if (result) {
                         var firstResult = result[0];
                         this.data.ro = this.ro;
+                        console.log(this.data);
                         // this.service.getMotif(firstResult.code.substring(9, 11))
                         //     .then((motif) => {
                         //         if (motif) {
@@ -228,30 +232,21 @@ export class Upload {
     }
 
 
-
+    @bindable imageUpload;
+    @bindable imageSrc;
+    imageUploadChanged(newValue) {
+      let imageInput = document.getElementById("imageInput");
+      let reader = new FileReader();
+      reader.onload = event => {
+        let base64Image = event.target.result;
+        this.imageSrc = this.data.ImageFile = base64Image;
+      };
+      reader.readAsDataURL(imageInput.files[0]);
+    }
     async upload() {
 
         var e = [];
-        var imageUpload = document.getElementById("imageUpload");
-        var fileList1 = imageUpload.files;
-        var imagePath;
-        // var motifUpload = document.getElementById("motifUpload");
-        // var fileList2 = motifUpload.files;
-
-        if (fileList1[0] == undefined) {
-            e["imageUpload"] = "Gambar harus dipilih"
-        }
-        else {
-            imagePath = await this.service.searchAll(fileList1[0].name);
-            if (imagePath.length > 0) {
-                e["imageUpload"] = "Nama file gambar tidak boleh sama"
-            }
-        }
-
-        // if (fileList2[0] == undefined)
-        //     e["motifUpload"] = "Gambar motif harus dipilih"
-
-
+       
         if (this.dataDestination.length == 0) {
             e["dataDestination"] = "Produk harus dipilih"
             if (this.dataSource.length == 0) {
@@ -295,55 +290,41 @@ export class Upload {
         if (Object.keys(e).length > 0) {
             this.error = e;
         } else {
-            var formData = new FormData();
-            formData.append("imageUpload", fileList1[0]);
-            var endpoint = 'upload/image';
-            var request = {
-                method: 'POST',
-                headers: {
-                },
-                data: {
-                    "products": this.dataDestination,
-                    "color": this.color,
-                    "article-color": this.article_color
-                },
-                body: formData
-            };
-            var promise = this.service.endpoint.client.fetch(endpoint, request)
-            this.service.publish(promise);
-            return promise.then(response => {
-                this.service.publish(promise);
-                if (response) {
-                    return response.json().then(result => {
+            
                         var data = {}
-                        data.products = this.dataDestination;
+                        data.dataDestination = this.dataDestination;
                         data.colorCode = this.color;
-                        data.articleColor = this.article_color;
-                        data.imagePath = result.data[0];
+                        data.color = this.article_color;
+                       // data.imagePath = result.data[0];
+                        data.imageFile = this.imageSrc;
                         // data.motifPath = result.data[1];
                         // data.realizationOrderName = this.data.realizationOrderName;
-                        data.processDoc = this.data.process;
+                        data.process = this.data.process;
                         // data.motifDoc = this.data.motif;
-                        data.seasonDoc = this.data.seasons;
-                        data.materialDoc = this.data.materials;
-                        data.materialCompositionDoc = this.data.materialCompositions;
-                        data.collectionDoc = this.data.collections;
-                        data.counterDoc = this.data.counters;
-                        data.styleDoc = this.data.subCounters;
-                        data.categoryDoc = this.data.categories;
-                        data.ro = this.data.ro;
+                        data.seasons = this.data.seasons;
+                        data.materials = this.data.materials;
+                        data.materialCompositions = this.data.materialCompositions;
+                        data.collections = this.data.collections;
+                        data.counters = this.data.counters;
+                        data.subCounters = this.data.subCounters;
+                        data.categories = this.data.categories;
+                        data.ArticleRealizationOrder = this.data.ro;
+                        data.ColorCode = this.data.colorCode;
+                        data.ColorDocName= this.data.ColorDocName;
+                        data.DomesticWholesale= this.data.DomesticWholesale;
+                        data.InternationalCOGS=this.data.InternationalCOGS;
+                        data.InternationalWholesale= this.data.InternationalWholesale;
+                        data.InternationalRetail=this.data.InternationalRetail;
+                        data.InternationalSale= this.data.InternationalSale;
+                        data.Remark= this.data.Remark;
+                        data.Uom= this.data.Uom;
+                        data.Size= this.data.Size;
                         this.service.updateProductImage(data)
                             .then(result2 => {
                                 this.list();
                             }).catch(e => {
                                 this.error = e;
                             });
-                    });
-                } else {
-                    return Promise.resolve({});
-                }
-
-            })
         }
 
     }
