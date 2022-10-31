@@ -23,12 +23,30 @@ export class Create {
     save() {
         this.data.destinationId = this.data.destination._id;
         this.data.sourceId = this.data.source._id;
-        this.service.create(this.data)
+        var canSave=false;
+        for(var item of this.data.items)
+        {
+            if(item.availablequantity===0)
+            {
+                canSave = false;
+            }
+            else
+            {
+                canSave = true;
+            }
+        }
+        if(canSave)
+        {
+            this.service.create(this.data)
             .then(result => {
                 this.list();
             })
             .catch(e => {
                 this.error = e;
             })
+        }else
+        {
+            alert('Data tidak bisa disimpan.Quantity 0. Silahkan dicek kembali');
+        }
     }
 }
