@@ -81,12 +81,20 @@ export class List {
   exportToXls() {
     let args = {
       page: this.info.page,
-      size: this.info.size,
-      dateFrom: this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
-      dateTo: this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : "",
+      pageSize: this.info.size,
+      email: this.info.email ? this.info.email : "",
+      name: this.info.name ? this.info.name : "",
+      phoneNumber: this.info.phoneNumber ? this.info.phoneNumber : "",
+      dobFrom: this.info.dobFrom
+        ? moment(this.info.dobFrom).format("YYYY-MM-DD")
+        : "",
+      dobTo: this.info.dobTo
+        ? moment(this.info.dobTo).format("YYYY-MM-DD")
+        : "",
+      membershipTier: this.info.membershipTier ? this.info.membershipTier : "Auto",
     };
-
-    this.service.generateExcel(args.dateFrom, args.dateTo);
+    this.service.generateExcel(args);
+    console.log(args);
   }
 
   changePage(e) {

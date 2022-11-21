@@ -2,15 +2,15 @@ import { inject, Lazy } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import { RestService } from '../../utils/rest-service';
 import { Container } from 'aurelia-dependency-injection';
-import { Config } from "aurelia-api";
+import { Config } from "aurelia-api"; 
 
-const serviceUri = 'api/searchUser';
+const serviceUri = 'customer/reportCustomer';
 const MaxWHServiceUri = 'max-wh-confirms';
 
 export class Service extends RestService {
 
     constructor(http, aggregator, config, endpoint) {
-        super(http, aggregator, config, "customers");
+        super(http, aggregator, config, "sales");
     }
 
     getById(id) {
@@ -19,42 +19,66 @@ export class Service extends RestService {
     }
 
     search(info) {
+        console.log(info);
         var endpoint = `${serviceUri}`;
-        return super.list(endpoint, info);
+        var query = '';
+
+        if (info.startOrder && info.startOrder !== "") {
+          if (query === '') query = `startOrder=${info.startOrder}`;
+          else query = `${query}&startOrder=${info.startOrder}`;
+      }
+      if (info.endOrder && info.endOrder !== "") {
+          if (query === '') query = `endOrder=${info.endOrder}`;
+          else query = `${query}&endOrder=${info.endOrder}`;
+      }
+      if (info.orderStatus && info.orderStatus !== "") {
+          if (query === '') query = `orderStatus=${info.orderStatus}`;
+          else query = `${query}&orderStatus=${info.orderStatus  }`;
+      }
+      if (info.totalOrderFrom && info.totalOrderFrom !== "") {
+          if (query === '') query = `totalOrderFrom=${info.totalOrderFrom}`;
+          else query = `${query}&totalOrderFrom=${info.totalOrderFrom}`;
+      }
+      if (info.totalOrderTo && info.totalOrderTo !== "") {
+        if (query === '') query = `totalOrderTo=${info.totalOrderTo}`;
+        else query = `${query}&totalOrderTo=${info.totalOrderTo}`;
+    }
+       
+      
+      if (query !== '')
+          endpoint = `${serviceUri}?${query}`;
+        return super.get(endpoint);
     }
 
-    create(data) {
-        var endpoint = `${serviceUri}`;
-        return super.post(endpoint, data);
-    }
+    generateExcel(info) {
+       
+        var query = '';
 
-    update(data) {
-        var endpoint = `${serviceUri}/${data.Id}`;
-        return super.put(endpoint, data);
+        if (info.startOrder && info.startOrder !== "") {
+          if (query === '') query = `startOrder=${info.startOrder}`;
+          else query = `${query}&startOrder=${info.startOrder}`;
+      }
+      if (info.endOrder && info.endOrder !== "") {
+          if (query === '') query = `endOrder=${info.endOrder}`;
+          else query = `${query}&endOrder=${info.endOrder}`;
+      }
+      if (info.orderStatus && info.orderStatus !== "") {
+          if (query === '') query = `orderStatus=${info.orderStatus}`;
+          else query = `${query}&orderStatus=${info.orderStatus  }`;
+      }
+      if (info.totalOrderFrom && info.totalOrderFrom !== "") {
+          if (query === '') query = `totalOrderFrom=${info.totalOrderFrom}`;
+          else query = `${query}&totalOrderFrom=${info.totalOrderFrom}`;
+      }
+      if (info.totalOrderTo && info.totalOrderTo !== "") {
+        if (query === '') query = `totalOrderTo=${info.totalOrderTo}`;
+        else query = `${query}&totalOrderTo=${info.totalOrderTo}`;
     }
-
-    delete(data) {
-        var endpoint = `${serviceUri}/${data.Id}`;
-        return super.delete(endpoint, data);
+       
+      
+      if (query !== '')
+        var endpoint = `${serviceUri}/download?${query}`;
+          return super.getXls(endpoint);
     }
-
-    cancelBooking(data) {
-        var endpoint = `${serviceUri}/BOCancel/${data.id}`;
-        return super.put(endpoint, data);
-    }
-
-    expiredBooking(data) {
-        var endpoint = `${serviceUri}/BODelete/${data.id}`;
-        return super.put(endpoint, data);
-    }
-
-    getMasterPlanByBookingOrderId(info) {
-        var config = Container.instance.get(Config);
-        var _serviceUri = `sewing-blocking-plans`;
-        var _endpoint = config.getEndpoint("nmasterplan");
-        return _endpoint.find(_serviceUri, info)
-            .then(result => {
-                return result.data;
-            });
-    }
+    
 }
