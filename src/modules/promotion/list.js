@@ -69,24 +69,25 @@ export class List {
     }
 
     if (this.flag) {
+      console.log(this.info.voucherType)
       if (this.info.voucherType) {
         switch (this.info.voucherType) {
-          case "percentage":
+          case "Percentage":
             args.voucherType = "1";
             break;
-          case "nominal":
+          case "Nominal":
             args.voucherType = "0";
             break;
-          case "buy n free m":
+          case "Buy n free m":
             args.voucherType = "3";
             break;
-          case "buy n discount m%":
+          case "Buy n discount m%":
             args.voucherType = "5";
             break;
-          case "buy n discount m% product (n)th":
+          case "Buy n discount m% product (n)th":
             args.voucherType = "6";
             break;
-          case "pay nominal rp.xx, free 1 product":
+          case "Pay nominal Rp.xx, Free 1 product":
             args.voucherType = "7";
             break;
           default:
