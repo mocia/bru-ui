@@ -19,6 +19,8 @@ export class View {
   async activate(params) {
     var id = params.id;
     this.data = await this.service.getMembershipById(id);
+    this.edit=null;
+    this.delete=null;
   }
 
   cancel(event) {
