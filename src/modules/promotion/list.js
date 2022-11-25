@@ -1,39 +1,39 @@
 import { inject, bindable } from "aurelia-framework";
-import { Service } from "./service";
+import { Service,VoucherService } from "./service";
 import { Router } from "aurelia-router";
 import moment from "moment";
 
-@inject(Router, Service)
+@inject(Router, Service,VoucherService)
 export class List {
   @bindable flag = false;
 
   context = ["Detail"];
 
   columns = [
+    // {
+    //   field: "isSelected",
+    //   title: "isSelected Checkbox",
+    //   checkbox: true,
+    //   sortable: false,
+    //   formatter: function(value, data, index) {
+    //       this.checkboxEnabled = (data.status.toLowerCase() == 'active');
+    //       return ""
+    //   }
+    // },
+    { title: "Discount Name", field: "DiscountName" },
+    { title: "Discount Type", field: "DiscountType" },
     {
-      field: "isSelected",
-      title: "isSelected Checkbox",
-      checkbox: true,
-      sortable: false,
-      formatter: function(value, data, index) {
-          this.checkboxEnabled = (data.status.toLowerCase() == 'active');
-          return ""
-      }
-    },
-    { title: "Discount Name", field: "discountName" },
-    { title: "Discount Type", field: "discountType" },
-    {
-      title: "Start Date", field: "startDate", formatter: function (value, data, index) {
+      title: "Start Date", field: "StartDate", formatter: function (value, data, index) {
         return moment(value).format('DD/MM/YYYY')
       }
     },
     {
-      title: "End Date", field: "endDate", formatter: function (value, data, index) {
+      title: "End Date", field: "EndDate", formatter: function (value, data, index) {
         return moment(value).format('DD/MM/YYYY')
       }
     },
-    { title: "Total Used", field: "totalUse" },
-    { title: "Status", field: "status" }
+    { title: "Total Used", field: "TotalClaimed" },
+    { title: "Status", field: "Status" }
   ];
 
   voucherTypeSources = [
@@ -55,37 +55,39 @@ export class List {
     },
   };
 
-  constructor(router, service) {
+  constructor(router, service,voucherService) {
     this.service = service;
     this.router = router;
+    this.voucherService=voucherService;
   }
 
   loader = (info) => {
     let args = {
       page: parseInt(info.offset / info.limit, 10) + 1,
       pageSize: info.limit,
-      discountName: info.search ? info.search : ''
+      keyword: info.search ? info.search : ''
     }
 
     if (this.flag) {
+      console.log(this.info.voucherType)
       if (this.info.voucherType) {
-        switch (this.info.voucherType.toLowerCase()) {
-          case "percentage":
+        switch (this.info.voucherType) {
+          case "Percentage":
             args.voucherType = "1";
             break;
-          case "nominal":
+          case "Nominal":
             args.voucherType = "0";
             break;
-          case "buy n free m":
+          case "Buy n free m":
             args.voucherType = "3";
             break;
-          case "buy n discount m%":
+          case "Buy n discount m%":
             args.voucherType = "5";
             break;
-          case "buy n discount m% product (n)th":
+          case "Buy n discount m% product (n)th":
             args.voucherType = "6";
             break;
-          case "pay nominal rp.xx, free 1 product":
+          case "Pay nominal Rp.xx, Free 1 product":
             args.voucherType = "7";
             break;
           default:
@@ -96,11 +98,12 @@ export class List {
 
       args.startDate = this.info.startDate ? moment(this.info.startDate).format("MM/DD/YYYY") : "01/01/0001"
       args.endDate = this.info.endDate ? moment(this.info.endDate).format("MM/DD/YYYY") : "01/01/0001"
-      args.discountCode = this.info.discountCode ? this.info.discountCode : ""
-      args.discountName = this.info.discountName ? this.info.discountName : ""
+      args.code = this.info.discountCode ? this.info.discountCode : ""
+      args.name = this.info.discountName ? this.info.discountName : ""
     }
 
-    return this.service.search(args).then((result) => {
+    return this.voucherService.search(args).then((result) => {
+      console.log(result)
       return {
         total: result.total,
         data: result.data,

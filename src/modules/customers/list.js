@@ -1,17 +1,19 @@
 import { inject } from "aurelia-framework";
 import { Service } from "./service";
 import { Router } from "aurelia-router";
-var moment = require("moment");
+var moment = require("moment"); 
 
 @inject(Router, Service)
 export class List {
   info = { page: 1, size: 25 };
+  membershipSources =["Auto","Silver","Gold","Platinum"]
+    
   form = {
     email: "",
     phoneNumber: "",
     dobFrom: "",
     dobTo: "",
-    membershipTier: "",
+    membershipTier: "Auto",
     name: "",
   };
   controlOptions = {
@@ -33,47 +35,35 @@ export class List {
     this.searching();
   }
 
-  search() {
-    this.info.page = 1;
-    this.info.total = 0;
-
-    if (
-      this.form.email == "" &&
-      this.form.name == "" &&
-      this.form.phoneNumber == "" &&
-      this.form.dobFrom == "" &&
-      this.form.dobTo == "" &&
-      this.form.membershipTier == ""
-    ) {
-      this.searching();
-    } else {
-      this.searching("SEARCH");
-    }
-  }
-
-  async searching(type) {
+ 
+  async searching() {
     let args = {
       page: this.info.page,
       pageSize: this.info.size,
-      email: this.form.email ? this.form.email : "",
-      name: this.form.name ? this.form.name : "",
-      phoneNumber: this.form.phoneNumber ? this.form.phoneNumber : "",
-      dobFrom: this.form.dobFrom
-        ? moment(this.form.dobFrom).format("YYYY-MM-DD")
+      email: this.info.email ? this.info.email : "",
+      name: this.info.name ? this.info.name : "",
+      phoneNumber: this.info.phoneNumber ? this.info.phoneNumber : "",
+      dobFrom: this.info.dobFrom
+        ? moment(this.info.dobFrom).format("YYYY-MM-DD")
         : "",
-      dobTo: this.form.dobTo
-        ? moment(this.form.dobTo).format("YYYY-MM-DD")
+      dobTo: this.info.dobTo
+        ? moment(this.info.dobTo).format("YYYY-MM-DD")
         : "",
-      membershipTier: this.form.membershipTier ? this.form.membershipTier : "",
+      membershipTier: this.info.membershipTier ? this.info.membershipTier : "Auto",
     };
-
+    
     this.service.search(args).then((result) => {
-      this.data = this.formatData(result.data);
-      if (type == "SEARCH") {
-        this.info.total = this.data.length;
-      } else {
-        this.info.total = result.total;
-      }
+    
+      this.data=[];
+      for(var _data of result){
+           
+         _data.fullName = _data.firstName + " " + _data.lastName;
+          this.data.push(_data);
+
+       }
+       console.log(this.data); 
+      //   this.info.total = result.total;
+       
     });
   }
 
@@ -91,12 +81,20 @@ export class List {
   exportToXls() {
     let args = {
       page: this.info.page,
-      size: this.info.size,
-      dateFrom: this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
-      dateTo: this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : "",
+      pageSize: this.info.size,
+      email: this.info.email ? this.info.email : "",
+      name: this.info.name ? this.info.name : "",
+      phoneNumber: this.info.phoneNumber ? this.info.phoneNumber : "",
+      dobFrom: this.info.dobFrom
+        ? moment(this.info.dobFrom).format("YYYY-MM-DD")
+        : "",
+      dobTo: this.info.dobTo
+        ? moment(this.info.dobTo).format("YYYY-MM-DD")
+        : "",
+      membershipTier: this.info.membershipTier ? this.info.membershipTier : "Auto",
     };
-
-    this.service.generateExcel(args.dateFrom, args.dateTo);
+    this.service.generateExcel(args);
+    console.log(args);
   }
 
   changePage(e) {

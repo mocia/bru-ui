@@ -130,8 +130,22 @@ class ServiceProduct extends RestService {
   }
 }
 
+const voucherUri="vouchers";
+class VoucherService extends RestService {
+  constructor(http, aggregator, config, endpoint) {
+    super(http, aggregator, config, "sales");
+  }
+
+  search(info) {
+    var endpoint = `${voucherUri}/membership`;
+    var query = '';
+    return super.list(endpoint,info);
+  }
+}
+
 export {
   Service,
   ServiceMembership,
   ServiceProduct,
+  VoucherService
 };

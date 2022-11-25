@@ -94,13 +94,7 @@
       <table class="table table-bordered table-hover" id="customerList">
         <thead>
           <tr>
-            <th style="width: 5%">
-              <input
-                type="checkbox"
-                value.bind="selectAll"
-                change.delegate="selectAllClicked($event)"
-              />
-            </th>
+         
             <th>Name</th>
             <th>Email</th>
             <th>Phone Number</th>
@@ -115,13 +109,7 @@
             </td>
           </tr>
           <tr repeat.for="item of data">
-            <td align="center" style="width: 5%">
-              <input
-                type="checkbox"
-                value.bind="data.isSelected"
-                change.delegate="selectedRowClicked($event, transaction.header.Id)"
-              />
-            </td>
+         
             <td>${item.name}</td>
             <td>${item.email}</td>
             <td>${item.phoneNumber}</td>

@@ -25,7 +25,7 @@
               type="text"
               class="form-control"
               name="email"
-              value.bind="form.email"
+              value.bind="info.email"
               placeholder="Email"
             />
           </div>
@@ -38,7 +38,7 @@
               type="text"
               class="form-control"
               name="name"
-              value.bind="form.name"
+              value.bind="info.name"
               placeholder="Nama"
             />
           </div>
@@ -53,7 +53,7 @@
               type="text"
               class="form-control"
               name="phoneNumber"
-              value.bind="form.phoneNumber"
+              value.bind="info.phoneNumber"
               placeholder="Nomor Telepon"
             />
           </div>
@@ -91,7 +91,7 @@
           >
           <div class="col-sm-4">
             <au-datepicker
-              value.bind="form.dobFrom"
+              value.bind="info.dobFrom"
               error.bind="error.FromDate"
               read-only.bind="readOnly"
               options.bind="controlOptionsDate"
@@ -100,7 +100,7 @@
           </div>
           <div class="col-sm-4">
             <au-datepicker
-              value.bind="data.dobTo"
+              value.bind="info.dobTo"
               error.bind="error.ToDate"
               read-only.bind="readOnly"
               options.bind="controlOptionsDate"
@@ -135,7 +135,7 @@
 
         <au-dropdown
           label="Membership Tier"
-          value.bind="form.membershipTier"
+          value.bind="info.membershipTier"
           items.bind="membershipSources"
           options.bind="controlOptions"
         >
@@ -143,7 +143,7 @@
       </div>
     </div>
     <div class="btn-center">
-      <button click.delegate="search()" class="btn btn-success btn-search">
+      <button click.delegate="searching()" class="btn btn-success btn-search">
         <strong>Search</strong>
       </button>
     </div>
@@ -156,13 +156,13 @@
       <table class="table table-bordered table-hover" id="customerList">
         <thead>
           <tr>
-            <th style="width: 5%">
+            <!-- <th style="width: 5%">
               <input
                 type="checkbox"
                 value.bind="selectAll"
                 change.delegate="selectAllClicked($event)"
               />
-            </th>
+            </th> -->
             <th>Email</th>
             <th>Phone Number</th>
             <th>Full Name</th>
@@ -177,13 +177,13 @@
             </td>
           </tr>
           <tr repeat.for="item of data">
-            <td align="center" style="width: 5%">
+            <!-- <td align="center" style="width: 5%">
               <input
                 type="checkbox"
                 value.bind="data.isSelected"
                 change.delegate="selectedRowClicked($event, transaction.header.Id)"
               />
-            </td>
+            </td> -->
             <td>${item.email}</td>
             <td>${item.phoneNumber}</td>
             <td>${item.fullName}</td>

@@ -21,10 +21,22 @@ export class View {
   async activate(params) {
     var id = params.id;
     this.customerInfo = await this.service.getCustomersById(id);
+    
+   for(var i of this.customerInfo)
+   {
+    this.customerInfo.firstName= i.firstName;
+    this.customerInfo.lastName= i.lastName;
+    this.customerInfo.email= i.email;
+    this.customerInfo.phoneNumber= i.phoneNumber;
+    this.customerInfo.gender= i.gender;
+    this.customerInfo.userMemberships= i.userMemberships;
+    this.customerInfo.totalPoint= i.totalPoint;
+   }
     this.customerInfo.dbo = moment(this.customerInfo.dbo).format("DD MMM YYYY");
     this.customerAddress = await this.service.getAddressBookById(id);
     this.setFullName(this.customerAddress);
-    this.customerOrders = [];
+    this.customerOrders = await this.service.getOrderByUserId(id);
+    console.log(this.customerOrders);
   }
 
   controlOptions = {
@@ -103,13 +115,14 @@ export class View {
 
   orderColumns = [
     {
-      field: "orderNumber",
+      field: "orderNo",
       title: "Order Number",
       sortable: false,
       width: "10%",
+     
     },
     {
-      field: "orderTotal",
+      field: "total",
       title: "Order Total",
       sortable: false,
       width: "10%",
@@ -127,13 +140,13 @@ export class View {
       width: "10%",
     },
     {
-      field: "shippingStatus",
+      field: "shipmentStatus",
       title: "Shipping Status",
       sortable: false,
       width: "10%",
     },
     {
-      field: "orderOrigin",
+      field: "agent",
       title: "Order Origin",
       sortable: false,
       width: "10%",

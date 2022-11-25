@@ -29,7 +29,7 @@ export class List {
       length: 12,
     },
   };
-  orderStatusSources = ["", "Pending", "Done"];
+  orderStatusSources = ["PENDING", "FINISHED"];
 
   constructor(router, service) {
     this.service = service;
@@ -69,27 +69,23 @@ export class List {
 
   async searching() {
     let args = {
-      page: this.info.page,
-      pageSize: this.info.size,
+       
       orderStatus: this.form.orderStatus ? this.form.orderStatus : "",
-      fromTotalOrder: this.form.fromTotalOrder ? this.form.fromTotalOrder : "",
-      toTotalOrder: this.form.toTotalOrder ? this.form.toTotalOrder : "",
-      fromDate: this.form.fromDate
+      totalOrderFrom: this.form.fromTotalOrder ? this.form.fromTotalOrder : "",
+      totalOrderTo: this.form.toTotalOrder ? this.form.toTotalOrder : "",
+      startOrder: this.form.fromDate
         ? moment(this.form.fromDate).format("YYYY-MM-DD")
         : "",
-      toDate: this.form.toDate
-        ? moment(this.form.dotoDatebTo).format("YYYY-MM-DD")
+        endOrder: this.form.toDate
+        ? moment(this.form.toDate).format("YYYY-MM-DD")
         : "",
     };
 
     this.service.search(args).then((result) => {
-      console.log(result);
-      // this.data = this.formatData(result.data.result);
-      // if (type == "SEARCH") {
-      //   this.info.total = this.data.length;
-      // } else {
-      //   this.info.total = result.total;
-      // }
+     console.log(result);
+
+       this.data =  result;
+      
     });
   }
 
@@ -106,13 +102,20 @@ export class List {
 
   exportToXls() {
     let args = {
-      page: this.info.page,
-      size: this.info.size,
-      dateFrom: this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
-      dateTo: this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : "",
+       
+      orderStatus: this.form.orderStatus ? this.form.orderStatus : "",
+      totalOrderFrom: this.form.fromTotalOrder ? this.form.fromTotalOrder : "",
+      totalOrderTo: this.form.toTotalOrder ? this.form.toTotalOrder : "",
+      startOrder: this.form.fromDate
+        ? moment(this.form.fromDate).format("YYYY-MM-DD")
+        : "",
+        endOrder: this.form.toDate
+        ? moment(this.form.toDate).format("YYYY-MM-DD")
+        : "",
     };
 
-    this.service.generateExcel(args.dateFrom, args.dateTo);
+
+    this.service.generateExcel(args);
   }
 
   changePage(e) {
