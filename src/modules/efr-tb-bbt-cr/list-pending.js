@@ -15,8 +15,7 @@ export class Pending {
    
     };
 
-    storeTemp = [];
-    store = [];
+    stores = [];
     filters = [];
     
     keyword = '';
@@ -28,57 +27,63 @@ export class Pending {
         this.localStorage = localStorage;
         this.storeId = this.localStorage.store._id;
         this.authService = authService;
+
         this.user = this.localStorage.me;
     }
 
     attached() {
         var storage = this.authService.authentication.storage;
         if (storage.get("me")) {
-            this.store = JSON.parse(storage.get("me")).data.stores;
-            this.storeTemp = this.store;
-
-            this.store.forEach((s) => {
-                s.toString = function () {
-                  return s.name;
-                }
-            });
+            this.stores = JSON.parse(storage.get("me")).data.stores;
         }
     }
+
 
     async activate() {
         var destinations;
         var storage = this.authService.authentication.storage;
       
         if (storage.get("me")) {
-            this.store = JSON.parse(storage.get("me")).data.stores;
-            this.storeTemp = this.store;
+            this.stores = JSON.parse(storage.get("me")).data.stores;
         }
-       
-        // if (this.store.length > 0) {
-        //     for(var i in this.store) {
-        //         if(i==0)
-        //         {
-        //             destinations = this.store[i].code +";" ;
-        //         }
-        //         else
-        //         {
-        //             destinations +=this.store[i].code +';';
-        //         }
-        //     }
-        // }
 
-        // this.info.destinationName = destinations;
-
-
+        if (this.stores.length > 0) {
+            for(var i in this.stores) {
+                if(i==0)
+                {
+                    destinations =this.stores[i].code +";" ;
+                 }
+                else
+                {
+                    destinations +=this.stores[i].code +';';
+                }
+               
+            }
+        }
         this.info.keyword = '';
-        console.log(this.storeTemp[0].code);
-        this.info.destinationName = this.storeTemp[0].code;
+        this.info.destinationName = destinations;
+       
+        var result = await this.service.listPending(this.info);
+        // var resultWithReference = await result.data.map(item => {
 
-        this.loadPage();
-        // var result = await this.service.listPending(this.info);
+        //     item["sourceReference"] = "";
+        //     item["destinationReference"] = "";
 
-        // this.data = result.data;
-        // this.info = result.info;
+        //     if (item.reference) {
+        //         var referenceData = tranferOutLoader(item.reference);
+
+        //         Promise.all([referenceData]).then(dataResult => {
+        //             var data = dataResult[0];
+        //             data.forEach(element => {
+        //                 item.sourceReference = element.source.name;
+        //                 item.destinationReference = element.destination.name;
+        //             });
+        //         });
+        //     }
+        //     return item;
+        // });
+        this.data = result.data;
+        this.info = result.info;
     }
 
     loadPage() {
@@ -121,18 +126,5 @@ export class Pending {
 
     create(view) {
         this.router.navigateToRoute('create');
-    }
-
-    async storeChange(e) {
-        var storeName = e.srcElement.value;
-
-        for(var i = 0; i < this.storeTemp.length; i++){
-            if(this.storeTemp[i].name === storeName) {
-                this.info.destinationName = this.storeTemp[i].code;
-                break;
-            }
-        }
-
-        this.loadPage();
     }
 }

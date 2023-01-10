@@ -1,7 +1,7 @@
 <template>
     <h3>Packing List</h3>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <div class="input-group">
                 <input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
                 <span class="input-group-btn">
@@ -9,12 +9,6 @@
                 </span>
             </div>
         </div>
-
-        <au-dropdown 
-            value.bind="selectedStore" 
-            items.bind="store"
-            change.delegate="storeChange($event)">
-        </au-dropdown>
     </div>
     <table class="table table-bordered table-hover">
         <thead>
