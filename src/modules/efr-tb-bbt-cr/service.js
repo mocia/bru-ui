@@ -29,8 +29,7 @@ export class Service extends RestService {
     }
 
     listPending(info) {
-        console.log(info);
-        var endpoint = `${serviceUri}/pendingStore`;
+        var endpoint = `${serviceUri}/pendingStore`;  
         return super.list(endpoint, info);
     }
 
