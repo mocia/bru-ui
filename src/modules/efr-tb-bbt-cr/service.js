@@ -30,7 +30,7 @@ export class Service extends RestService {
 
     listPending(info) {
         var endpoint = `${serviceUri}/pendingStore`;  
-        return super.get(endpoint);
+        return super.list(endpoint, info);
     }
 
     getPendingSPKById(id) {
