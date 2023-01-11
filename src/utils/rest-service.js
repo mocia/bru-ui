@@ -109,8 +109,6 @@ export class RestService {
       })
   }
 
-
-
   getXls(endpoint, header) {
     var request = {
       method: 'GET',
@@ -164,7 +162,6 @@ export class RestService {
           return Promise.resolve({});
       })
   }
-
 
   ngetXls(endpoint, header) {
     var request = {

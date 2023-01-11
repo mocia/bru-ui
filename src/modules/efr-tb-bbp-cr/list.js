@@ -44,10 +44,10 @@ export class List {
           size: info.limit,
           keyword: info.search,
           order: order,
-          filter: JSON.stringify ({
-            'Reference.Contains("BTQ-FN") || Reference.Contains("BTQ-KB/PLR")': "true",
-            'DestinationCode.Contains("GDG.05")': "false"
-          })
+        //   filter: JSON.stringify ({
+        //     'Reference.Contains("BTQ-FN") || Reference.Contains("BTQ-KB/PLR")': "true",
+        //     'DestinationCode.Contains("GDG.05")': "false"
+        //   })
       };
 
       return this.service.search(arg)
