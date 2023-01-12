@@ -10,10 +10,10 @@ export class Pending {
     info = {
       page: 1,
       keyword: '',
-      filter: JSON.stringify ({
-        "IsReceived": false,
-        'PackingList.Contains("BTQ-FN") || Reference.Contains("BTQ-KB/RTP")': "true",
-      })
+    //   filter: JSON.stringify ({
+    //     "IsReceived": false,
+    //     'PackingList.Contains("BTQ-FN") || Reference.Contains("BTQ-KB/RTP")': "true",
+    //   })
     };
     keyword = '';
     constructor(router, service) {
