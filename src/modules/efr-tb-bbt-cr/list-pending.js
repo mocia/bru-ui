@@ -82,8 +82,8 @@ export class Pending {
         //     return item;
         // });
         var result = this.loadPage();
-        this.data = result.data;
-        this.info = result.info;
+        // this.data = result.data;
+        // this.info = result.info;
     }
 
     loadPage() {
