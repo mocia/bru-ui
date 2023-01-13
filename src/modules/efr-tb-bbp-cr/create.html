@@ -4,7 +4,9 @@
     <block>
         <data-form data.bind="data" error.bind="error"></data-form>
         <hr/>
+      
         <div class="btn-group pull-right">
+            <button class="btn btn-primary" click.delegate="exportToExcel()">Export To Excel</button>
             <button class="btn btn-default" click.delegate="list()">Kembali</button>
             <button class="btn btn-success" click.delegate="save()">Simpan</button>
         </div>
