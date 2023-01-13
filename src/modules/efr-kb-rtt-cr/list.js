@@ -71,8 +71,12 @@ export class List {
     
     loadData = (info) => {
         var order = {};
-        if (info.sort)
+        if (info.sort){
             order[info.sort] = info.order;
+        }
+        else {
+            order.createdDate = "desc";
+        }
 
         var arg = {
             page: parseInt(info.offset / info.limit, 10) + 1,
@@ -87,9 +91,9 @@ export class List {
                 var dataSPKB = [];
                 let dataPLTS = [];
                 return {
-                                      total: result.info.total,
-                                      data: dataResult
-                                  };
+                    total: result.info.total,
+                    data: dataResult
+                };
                 // for(var a of dataResult){
                 //    dataSPKB.push(this.service.getSPKByReference(a.code));
                 //    dataPLTS.push(this.service.getPackingListTransferStock(a.code));
@@ -144,7 +148,6 @@ export class List {
     contextShowCallback(index, name, data) {
         return true;
     }
-
 
     contextClickCallback(event) {
         var arg = event.detail;
