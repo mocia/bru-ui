@@ -5,6 +5,7 @@ import { RestService } from '../../utils/rest-service';
 //const serviceUri = '/docs/efr-tb-bbp'; 
 const serviceUriTransferIn = 'transfer-in';
 const serviceUriSPK = 'pkpbj/by-user'
+const serviceUriSPKPending = 'pkpbj/by-user/packingRTP'
 const serviceUriStorages = '/storages';
 
 export class Service extends RestService {
@@ -14,7 +15,7 @@ export class Service extends RestService {
     }
 
     search(info) {
-        var endpoint = `${serviceUriTransferIn}`
+        var endpoint = `${serviceUriTransferIn}/received`
         return super.list(endpoint, info);
     }
 
@@ -29,7 +30,8 @@ export class Service extends RestService {
     }
 
     listPending(info) {
-        var endpoint = `${serviceUriSPK}`;
+       // var endpoint = `${serviceUriSPK}`;
+       var endpoint = `${serviceUriSPKPending}`;
         return super.list(endpoint, info);
     }
 
@@ -37,5 +39,8 @@ export class Service extends RestService {
         var endpoint = `${serviceUriSPK}/${id}`;
         return super.get(endpoint);
     }
-
+    generateExcel(id) {
+        var endpoint = `${serviceUriSPK}/${id}/exportall`;
+        return super.getXls(endpoint);
+      }
 }

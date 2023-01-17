@@ -38,32 +38,31 @@ export class Pending {
         }
     }
 
-
     async activate() {
-        var destinations;
+        //var destinations;
         var storage = this.authService.authentication.storage;
       
         if (storage.get("me")) {
             this.stores = JSON.parse(storage.get("me")).data.stores;
         }
 
-        if (this.stores.length > 0) {
-            for(var i in this.stores) {
-                if(i==0)
-                {
-                    destinations =this.stores[i].code +";" ;
-                 }
-                else
-                {
-                    destinations +=this.stores[i].code +';';
-                }
+        // if (this.stores.length > 0) {
+        //     for(var i in this.stores) {
+        //         if(i==0)
+        //         {
+        //             destinations =this.stores[i].code +";" ;
+        //          }
+        //         else
+        //         {
+        //             destinations +=this.stores[i].code +';';
+        //         }
                
-            }
-        }
-        this.info.keyword = '';
-        this.info.destinationName = destinations;
+        //     }
+        // }
+        // this.info.keyword = '';
+        // this.info.destinationName = destinations;
        
-        var result = await this.service.listPending(this.info);
+        //var result = await this.service.listPending(this.info);
         // var resultWithReference = await result.data.map(item => {
 
         //     item["sourceReference"] = "";
@@ -82,8 +81,9 @@ export class Pending {
         //     }
         //     return item;
         // });
-        this.data = result.data;
-        this.info = result.info;
+        var result = this.loadPage();
+        // this.data = result.data;
+        // this.info = result.info;
     }
 
     loadPage() {
