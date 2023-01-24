@@ -109,8 +109,9 @@ export class Pending {
                     return item;
                 });
                 this.data = resultWithReference;
-                this.info = result.info;
+                this.dataInfo= result.info;
                 this.info.keyword = keyword;
+                this.dataInfo.keyword = keyword;
             })
     }
 
