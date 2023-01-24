@@ -53,6 +53,7 @@ export class DataForm {
                 weight += parseFloat(item.weight || 0);
             }
         }
+        this.data.weight=weight;
         return weight;
     }
 
