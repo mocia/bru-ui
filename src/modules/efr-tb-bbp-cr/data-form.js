@@ -17,8 +17,10 @@ export class DataForm {
     } 
     
     search() {  
+        console.log(this.data.reference);
         this.service.getOutByCode(this.data.reference)
             .then(dataOut=>{ 
+                console.log(dataOut);
                 var dataOutFirst = dataOut[0];
                 this.data.sourceId = dataOutFirst.sourceId
                 this.data.destinationId = dataOutFirst.destinationId
