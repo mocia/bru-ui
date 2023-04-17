@@ -11,38 +11,50 @@ export class List {
         this.router = router;
 
     }
+    info = {
+        page:1,
+        size:25,
+    };
+
     bind(context) {
         this.context = context;
     }
     
     searching() {
+       
         var info = {
-            storage : this.storage ? this.storage.Id : "",
+            storage : this.storage ? this.storage._id : "",
             dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
             dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
-        } 
-        this.service.search(info)
+        }
+         
+        this.service.getStock(info)
             .then(result => {
-                console.log(result);
+                this.data=[];
+                console.log(result.info.total);
+                this.info.total = result.info.total; 
+                for(var _data of result.data){
+                    _data.Date =  moment(_data.Date).format("YYYY-MM-DD");
+                    this.data.push(_data);
+
+                 }
             });
     }
     
     ExportToExcel() {
         var info = {
-            storage : this.storage ? this.storage.Id : "",
+            storage : this.storage ? this.storage._id : "",
             dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
             dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
       
         }
-        this.service.generateExcel(info);
+        this.service.getStockExcel(info);
     }
 
     get storageLoader(){
-         
         return StorageLoader;
     }
     storageView = (storage) => {
-        
         return `${storage}`;
     
     }
@@ -51,7 +63,9 @@ export class List {
     reset() {
         this.dateFrom = null;
         this.dateTo = null;
-        this.storage = null;
+        this.storage = "";
+        this.data = null;
+        this.info.total=0;
     }
   
     

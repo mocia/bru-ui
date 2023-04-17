@@ -40,28 +40,25 @@
       <table class="table table-bordered table-hover" border="1" id="myTable">
           <thead align="center">
               <tr>
-                  
-                  <td>Item Code</td>
-                  <td>Item Name</td>
-                  <td>Item Domestic Sale</td>
-                  <td>Quantity</td>
-                  <td>Date</td>
-                  <td>Storage Code</td>
-                  <td>Storage Name</td>
-                  
+                <td>Item Code</td>
+                <td>Item Name</td>
+                <td>Item Domestic Sale</td>
+                <td>Quantity</td>
+                <td>Date</td>
+                <td>Storage Code</td>
+                <td>Storage Name</td>
               </tr>
           </thead>
           <tbody>
-              <require from="../../../lib/number-format-value-converter"></require>
+              <!-- <require from="../../../lib/number-format-value-converter"></require> -->
               <tr repeat.for="item of data">
-                  <td class="text-center">${item.ItemCode}</td>
-                  <td class="text-center">${item.ItemName}</td>
-                  <td class="text-center">${item.ItemDomesticSale}</td>
-                  <td class="text-center">${item.Quantity}</td>
-                  <td class="text-center">${item.Date}</td>
-                  <td class="text-center">${item.StorageCode}</td>
-                  <td class="text-right">${item.StorageName}</td>
-                 
+                <td class="text-left">${item.ItemCode}</td>
+                <td class="text-left">${item.ItemName}</td>
+                <td class="text-right">${item.ItemDomesticSale}</td>
+                <td class="text-right">${item.Quantity}</td>
+                <td class="text-center">${item.Date}</td>
+                <td class="text-left">${item.StorageCode}</td>
+                <td class="text-left">${item.StorageName}</td>
               </tr>
              
           </tbody>
@@ -69,8 +66,8 @@
   </div>
   <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
     Tidak ada data.
-  </div>
-  <hr/>
-    </au-input-form>
-    <div class="row"></div>
+</div>
+
+<pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+<hr/>
   </template>

@@ -63,6 +63,8 @@ export class List {
         this.dateFrom = null;
         this.dateTo = null;
         this.storage = "";
+        this.data = null;
+        this.info.total=0;
     }
   
     
