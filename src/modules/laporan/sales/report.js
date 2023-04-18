@@ -11,22 +11,29 @@ export class List {
         this.router = router;
 
     }
+    info = {
+        page:1,
+        size:25,
+    };
+
     bind(context) {
         this.context = context;
     }
     
     searching() {
+       
         var info = {
-            storage : this.storage ? this.storage.Id : "",
+            storage : this.storage ? this.storage._id : "",
             dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
             dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
         }
-        this.service.search(info)
+        this.service.getSales(info)
             .then(result => {
                 this.data=[];
                 console.log(result);
-                for(var _data of result){
-                  
+                this.info.total = result.info.total; 
+                for(var _data of result.data){
+                    _data.Date =  moment(_data.Date).format("YYYY-MM-DD");
                     this.data.push(_data);
 
                  }
@@ -35,12 +42,12 @@ export class List {
     
     ExportToExcel() {
         var info = {
-            unit : this.unit ? this.unit.Id : "",
+            storage : this.storage ? this.storage._id : "",
             dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
             dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
       
         }
-        this.service.generateExcel(info);
+        this.service.getSalesExcel(info);
     }
 
     get storageLoader(){
@@ -50,13 +57,43 @@ export class List {
         return `${storage}`;
     
     }
-
     
     reset() {
         this.dateFrom = null;
         this.dateTo = null;
-        this.storage = null;
+        this.storage = "";
+        this.data = null;
+        this.info.total=0;
     }
-  
+    changePage(e){
+        var page = e.detail;
+        this.info.page = page;
+
+        this.showMovement();
+    }
     
+    showMovement() {
+
+        this.data = [];
+ 
+        var args = {
+            page: this.info.page,
+            size: this.info.size,
+            storage : this.storage ? this.storage._id : "",
+            dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
+            dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
+        } 
+        this.service.getMovement(args)
+        .then(result => {
+            this.data=[];
+            for(var _data of result.data){
+                _data.Date =  moment(_data.Date).format("YYYY-MM-DD");
+                this.data.push(_data);
+             }
+            })
+            .catch(e => {
+                this.error = e;
+            })
+        }
 }
+        
