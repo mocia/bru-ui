@@ -49,7 +49,7 @@
                   <td>Store Name</td>
                   <td>Item Code</td>
                   <td>Item Name</td>
-                  <td>Item Size</td>
+                   
                   <td>RO</td>
                   <td>Quantity</td>
                   <td>Price</td>
@@ -69,30 +69,30 @@
           <tbody>
               <require from="../../../lib/number-format-value-converter"></require>
               <tr repeat.for="item of data">
-                  <td class="text-center">${item.Code}</td>
-                  <td class="text-center">${item.Date}</td>
+                  <td class="text-left">${item.Code}</td>
+                  <td class="text-left">${item.Date}</td>
                   <td class="text-right">${item.SubTotal}</td>
                   <td class="text-right">${item.Discount}</td>
                   <td class="text-right">${item.GrandTotal}</td>
-                  <td class="text-center">${item.StoreCode}</td>
-                  <td class="text-center">${item.StoreName}</td>
-                  <td class="text-center">${item.ItemCode}</td>
-                  <td class="text-center">${item.ItemName}</td>
-                  <td class="text-center">${item.ItemSize}</td>
-                  <td class="text-center">${item.ItemArticleRealizationOrder}</td>
+                  <td class="text-left">${item.StoreCode}</td>
+                  <td class="text-left">${item.StoreName}</td>
+                  <td class="text-left">${item.ItemCode}</td>
+                  <td class="text-left">${item.ItemName}</td>
+                
+                  <td class="text-left">${item.ItemArticleRealizationOrder}</td>
                   <td class="text-right">${item.Quantity}</td>
                   <td class="text-right">${item.Price}</td>
                   <td class="text-right">${item.Discount1}</td>
                   <td class="text-right">${item.Discount2}</td>
                   <td class="text-right">${item.DiscountNominal}</td>
                   <td class="text-right">${item.Margin}</td>
-                  <td class="text-right">${item.SpesialDiscount}</td>
+                  <td class="text-right">${item.SpecialDiscount}</td>
                   <td class="text-right">${item.Total}</td>
-                  <td class="text-center">${item.isReturn}</td>
-                  <td class="text-center">${item.Remark}</td>
-                  <td class="text-center">${item.PaymentType}</td>
-                  <td class="text-center">${item.BankName}</td>
-                  <td class="text-center">${item.Card}</td>
+                  <td class="text-left">${item.IsReturn}</td>
+                  <td class="text-left">${item.Remark}</td>
+                  <td class="text-left">${item.PaymentType}</td>
+                  <td class="text-left">${item.BankName}</td>
+                  <td class="text-left">${item.Card}</td>
               </tr>
              
           </tbody>
