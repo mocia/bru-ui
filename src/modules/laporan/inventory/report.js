@@ -85,7 +85,7 @@ export class List {
             dateFrom : this.dateFrom ? moment(this.dateFrom).format("YYYY-MM-DD") : "",
             dateTo : this.dateTo ? moment(this.dateTo).format("YYYY-MM-DD") : ""
         } 
-        this.service.getMovement(args)
+        this.service.getStock(args)
         .then(result => {
             this.data=[];
             for(var _data of result.data){
