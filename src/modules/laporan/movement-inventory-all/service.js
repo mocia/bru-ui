@@ -13,7 +13,7 @@ export class Service extends RestService {
     }
 
     getMovement(info) {
-      
+      console.log(info);
         var endpoint = `${serviceUri}`;
 
         return super.list(endpoint, info);
